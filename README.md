@@ -25,7 +25,7 @@ The file is provided to the Kubernetes API Server using a CLI or UI. Kubernetesâ
 
 ![ScreenShot](https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG)
 
-# Control Plane Components: 
+1 . # Control Plane Components: 
 ## API Server [kube-apiserver]
 The API Server is the front-end of the control plane and the only component in the control plane that we interact with directly. Internal system components, as well as external user components, all communicate via the same API.
 
@@ -66,7 +66,7 @@ The following controllers can have cloud provider dependencies:
 ## Scheduler [kube-scheduler]
 A Scheduler watches for new requests coming from the API Server and assigns them to healthy nodes. It ranks the quality of the nodes and deploys pods to the best-suited node. If there are no suitable nodes, the pods are put in a pending state until such a node appears.
 
-# Node Components
+2 . # Node Components
 
 ## Kubelet
 The kubelet runs on every node in the cluster. It is the principal Kubernetes agent. By installing kubelet, the nodeâ€™s CPU, RAM, and storage become part of the broader cluster. It watches for tasks sent from the API Server, executes the task, and reports back to the Master. It also monitors pods and reports back to the control panel if a pod is not fully functional. Based on that information, the Master can then decide how to allocate tasks and resources to reach the desired state.
