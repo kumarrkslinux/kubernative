@@ -26,10 +26,10 @@ The file is provided to the Kubernetes API Server using a CLI or UI. Kubernetesâ
 ![ScreenShot](https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG)
 
 # Control Plane Components: 
-## API Server
+## API Server [kube-apiserver]
 The API Server is the front-end of the control plane and the only component in the control plane that we interact with directly. Internal system components, as well as external user components, all communicate via the same API.
 
-## Key-Value Store (etcd)
+## Key-Value Store (etcd) - Cluster
 The Key-Value Store, also called etcd, is a database Kubernetes uses to back-up all cluster data. It stores the entire configuration and state of the cluster. The Master node queries etcd to retrieve parameters for the state of the nodes, pods, and containers.
 
 ## Controller
@@ -63,7 +63,7 @@ The following controllers can have cloud provider dependencies:
 
 -> Service controller: For creating, updating and deleting cloud provider load balancers
 
-## Scheduler
+## Scheduler [kube-scheduler]
 A Scheduler watches for new requests coming from the API Server and assigns them to healthy nodes. It ranks the quality of the nodes and deploys pods to the best-suited node. If there are no suitable nodes, the pods are put in a pending state until such a node appears.
 
 # Node Components
