@@ -35,6 +35,7 @@ The Key-Value Store, also called etcd, is a database Kubernetes uses to back-up 
   ## Controller
 The role of the Controller is to obtain the desired state from the API Server. It checks the current state of the nodes it is tasked to control, and determines if there are any differences, and resolves them, if any.
 
+  ## kube-controller-manager
 Control plane component that runs controller processes.
 
 Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.
