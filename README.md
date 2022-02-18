@@ -25,14 +25,14 @@ The file is provided to the Kubernetes API Server using a CLI or UI. Kubernetes�
 
 ![ScreenShot](https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG)
 
-1 . # Control Plane Components: 
-## API Server [kube-apiserver]
+# 1 . Control Plane Components: 
+  ## API Server [kube-apiserver]
 The API Server is the front-end of the control plane and the only component in the control plane that we interact with directly. Internal system components, as well as external user components, all communicate via the same API.
 
-## Key-Value Store (etcd) - Cluster
+  ## Key-Value Store (etcd) - Cluster
 The Key-Value Store, also called etcd, is a database Kubernetes uses to back-up all cluster data. It stores the entire configuration and state of the cluster. The Master node queries etcd to retrieve parameters for the state of the nodes, pods, and containers.
 
-## Controller
+  ## Controller
 The role of the Controller is to obtain the desired state from the API Server. It checks the current state of the nodes it is tasked to control, and determines if there are any differences, and resolves them, if any.
 
 Control plane component that runs controller processes.
@@ -49,7 +49,7 @@ Some types of these controllers are:
 
 -> Service Account & Token controllers: Create default accounts and API access tokens for new namespaces.
 
-# cloud-controller-manager
+  ## cloud-controller-manager
 A Kubernetes control plane component that embeds cloud-specific control logic. The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with your cluster.
 The cloud-controller-manager only runs controllers that are specific to your cloud provider. If you are running Kubernetes on your own premises, or in a learning environment inside your own PC, the cluster does not have a cloud controller manager.
 
@@ -66,18 +66,18 @@ The following controllers can have cloud provider dependencies:
 ## Scheduler [kube-scheduler]
 A Scheduler watches for new requests coming from the API Server and assigns them to healthy nodes. It ranks the quality of the nodes and deploys pods to the best-suited node. If there are no suitable nodes, the pods are put in a pending state until such a node appears.
 
-2 . # Node Components
+# 2 . Node Components
 
-## Kubelet
+  ## Kubelet
 The kubelet runs on every node in the cluster. It is the principal Kubernetes agent. By installing kubelet, the node’s CPU, RAM, and storage become part of the broader cluster. It watches for tasks sent from the API Server, executes the task, and reports back to the Master. It also monitors pods and reports back to the control panel if a pod is not fully functional. Based on that information, the Master can then decide how to allocate tasks and resources to reach the desired state.
 
-## Container Runtime
+  ## Container Runtime
 The container runtime pulls images from a container image registry and starts and stops containers. A 3rd party software or plugin, such as Docker, usually performs this function.
 
-## Kube-proxy
+ ## Kube-proxy
 The kube-proxy makes sure that each node gets its IP address, implements local iptables and rules to handle routing and traffic load-balancing.
 
-## Pod
+ ## Pod
 A pod is the smallest element of scheduling in Kubernetes. Without it, a container cannot be part of a cluster. If you need to scale your app, you can only do so by adding or removing pods.
 
 The pod serves as a ‘wrapper’ for a single container with the application code. Based on the availability of resources, the Master schedules the pod on a specific node and coordinates with the container runtime to launch the container.
