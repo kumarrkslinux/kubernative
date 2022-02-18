@@ -42,8 +42,11 @@ Logically, each controller is a separate process, but to reduce complexity, they
 ## Some types of these controllers are:
 
 -> Node controller: Responsible for noticing and responding when nodes go down.
+
 -> Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion.
+
 -> Endpoints controller: Populates the Endpoints object (that is, joins Services & Pods).
+
 Service Account & Token controllers: Create default accounts and API access tokens for new namespaces.
 
 # cloud-controller-manager
@@ -55,7 +58,9 @@ As with the kube-controller-manager, the cloud-controller-manager combines sever
 The following controllers can have cloud provider dependencies:
 
 -> Node controller: For checking the cloud provider to determine if a node has been deleted in the cloud after it stops responding
+
 -> Route controller: For setting up routes in the underlying cloud infrastructure
+
 -> Service controller: For creating, updating and deleting cloud provider load balancers
 
 ## Scheduler
