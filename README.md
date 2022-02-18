@@ -1,6 +1,16 @@
 # kubernative
 
+
+
+Architecture with Diagrams:
+
 Kubernetes, also known as K8s, is an open-source system for automating deployment, scaling, and management of containerized applications.
+
+
+
+
+
+
 
 Certified Kubernetes Administrator: https://www.cncf.io/certification/cka/
 
