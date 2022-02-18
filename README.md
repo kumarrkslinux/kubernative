@@ -35,6 +35,29 @@ The Key-Value Store, also called etcd, is a database Kubernetes uses to back-up 
 ## Controller
 The role of the Controller is to obtain the desired state from the API Server. It checks the current state of the nodes it is tasked to control, and determines if there are any differences, and resolves them, if any.
 
+Control plane component that runs controller processes.
+
+Logically, each controller is a separate process, but to reduce complexity, they are all compiled into a single binary and run in a single process.
+
+## Some types of these controllers are:
+
+-> Node controller: Responsible for noticing and responding when nodes go down.
+-> Job controller: Watches for Job objects that represent one-off tasks, then creates Pods to run those tasks to completion.
+-> Endpoints controller: Populates the Endpoints object (that is, joins Services & Pods).
+Service Account & Token controllers: Create default accounts and API access tokens for new namespaces.
+
+# cloud-controller-manager
+A Kubernetes control plane component that embeds cloud-specific control logic. The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with your cluster.
+The cloud-controller-manager only runs controllers that are specific to your cloud provider. If you are running Kubernetes on your own premises, or in a learning environment inside your own PC, the cluster does not have a cloud controller manager.
+
+As with the kube-controller-manager, the cloud-controller-manager combines several logically independent control loops into a single binary that you run as a single process. You can scale horizontally (run more than one copy) to improve performance or to help tolerate failures.
+
+The following controllers can have cloud provider dependencies:
+
+-> Node controller: For checking the cloud provider to determine if a node has been deleted in the cloud after it stops responding
+-> Route controller: For setting up routes in the underlying cloud infrastructure
+-> Service controller: For creating, updating and deleting cloud provider load balancers
+
 ## Scheduler
 A Scheduler watches for new requests coming from the API Server and assigns them to healthy nodes. It ranks the quality of the nodes and deploys pods to the best-suited node. If there are no suitable nodes, the pods are put in a pending state until such a node appears.
 
