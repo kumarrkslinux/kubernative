@@ -47,7 +47,7 @@ Logically, each controller is a separate process, but to reduce complexity, they
 
 -> Endpoints controller: Populates the Endpoints object (that is, joins Services & Pods).
 
-Service Account & Token controllers: Create default accounts and API access tokens for new namespaces.
+-> Service Account & Token controllers: Create default accounts and API access tokens for new namespaces.
 
 # cloud-controller-manager
 A Kubernetes control plane component that embeds cloud-specific control logic. The cloud controller manager lets you link your cluster into your cloud provider's API, and separates out the components that interact with that cloud platform from components that only interact with your cluster.
