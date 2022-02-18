@@ -15,7 +15,7 @@ Kubernetes is not only an orchestration system. It is a set of independent, inte
 Kubernetes has a decentralized architecture that does not handle tasks sequentially. It functions based on a declarative model and implements the concept of a ‘desired state.’ These steps illustrate the basic Kubernetes process:
 
 -> An administrator creates and places the desired state of an application into a manifest file.
-The file is provided to the Kubernetes API Server using a CLI or UI. Kubernetes’ default command-line tool is called kubectl. In case you need a comprehensive list of kubectl commands, check out our Kubectl Cheat Sheet.
+The file is provided to the Kubernetes API Server using a CLI or UI. Kubernetes’ default command-line tool is called kubectl. 
 
 -> Kubernetes stores the file (an application’s desired state) in a database called the Key-Value Store (etcd).
 
