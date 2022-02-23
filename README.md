@@ -25,7 +25,7 @@ The file is provided to the Kubernetes API Server using a CLI or UI. Kubernetesâ
 
 ![ScreenShot](https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG)
 
-# 1 . Control Plane Components: 
+# 1 . Control Plane Components: (Master Node)
   ## API Server [kube-apiserver]
 The API Server is the front-end of the control plane and the only component in the control plane that we interact with directly. Internal system components, as well as external user components, all communicate via the same API.
 
