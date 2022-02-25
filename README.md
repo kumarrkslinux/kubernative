@@ -1,4 +1,4 @@
-# Kubernative
+# Kubernetes
 
 Kubernetes, or k8s for short, is a system for automating application deployment. Modern applications are dispersed across clouds, virtual machines, and servers. Administering apps manually is no longer a viable option.
 
