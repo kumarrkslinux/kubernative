@@ -1,6 +1,6 @@
 # POD:
 
-# Create an NGINX Pod
+## Create a Pod
 
 kubectl run nginx --image=nginx
 
@@ -10,7 +10,7 @@ kubectl run nginx --image=nginx --dry-run=client -o yaml
 
 
 
-# Replicaset: 
+## Replicaset: 
 
 kubectl get pods
 
@@ -29,8 +29,8 @@ kubectl edit replicasets.apps new-replica-set (Either delete and recreate the Re
 kubectl scale replicaset --replicas=5 new-replica-set
 
 
-# deployment
-# Create a deployment
+# Deployment
+## Create a deployment
 
 kubectl create deployment --image=nginx nginx
 
