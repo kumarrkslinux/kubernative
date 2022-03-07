@@ -19,36 +19,29 @@ Generate POD Manifest YAML file (-o yaml). Don't create it(--dry-run)
 # Deployment
 ## Create a deployment
 - kubectl create deployment --image=nginx nginx
-Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
+  Generate Deployment YAML file (-o yaml). Don't create it(--dry-run)
 - kubectl create deployment --image=nginx nginx --dry-run=client -o yaml
-Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
+  Generate Deployment YAML file (-o yaml). Don't create it(--dry-run) with 4 Replicas (--replicas=4)
 - kubectl create deployment --image=nginx nginx --dry-run=client -o yaml > nginx-deployment.yaml
-Save it to a file, make necessary changes to the file (for example, adding more replicas) and then create the deployment.
+  Save it to a file, make necessary changes to the file (for example, adding more replicas) and then create the deployment.
 - kubectl create -f nginx-deployment.yaml
-Generate Deployment with 4 Replicas
+  Generate Deployment with 4 Replicas
 - kubectl create deployment nginx --image=nginx --replicas=4 
 OR
-In k8s version 1.19+, we can specify the --replicas option to create a deployment with 4 replicas.
+  In k8s version 1.19+, we can specify the --replicas option to create a deployment with 4 replicas.
 - kubectl create deployment --image=nginx nginx --replicas=4 --dry-run=client -o yaml > nginx-deployment.yaml
-
-You can also scale a deployment using the kubectl scale command.
+  You can also scale a deployment using the kubectl scale command.
 - kubectl scale deployment nginx --replicas=4
-
-Another way to do this is to save the YAML definition to a file and modify
+  Another way to do this is to save the YAML definition to a file and modify
 - kubectl create deployment nginx --image=nginx --dry-run=client -o yaml > nginx-deployment.yaml
-
-You can then update the YAML file with the replicas or any other field before creating the deployment.
+  You can then update the YAML file with the replicas or any other field before creating the deployment.
 
 # Service
 
 Create a Service named redis-service of type ClusterIP to expose pod redis on port 6379
-
-kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml
-
+- kubectl expose pod redis --port=6379 --name redis-service --dry-run=client -o yaml
 (This will automatically use the pod's labels as selectors)
-
 Or
-
 kubectl create service clusterip redis --tcp=6379:6379 --dry-run=client -o yaml (This will not use the pods labels as selectors, instead it will assume selectors as app=redis. You cannot pass in selectors as an option. So it does not work very well if your pod has a different label set. So generate the file and modify the selectors before creating the service)
 
 # Namespaces
