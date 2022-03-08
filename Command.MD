@@ -61,3 +61,4 @@ Or
 - kubectl run nginx --image=nginx --dry-run=client -o yaml > pods.yaml
 - kubectl get pods --all-namespaces
 - kubectl config set-context ($kubectl config current-context) currentnamespace --namespace=dev
+https://www.golinuxcloud.com/install-kubernetes-cluster-kubeadm-centos-8/
