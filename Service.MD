@@ -43,7 +43,7 @@ nodePort: 30080
 selector:
   name: simple-webapp
   
-service-definition-1.yaml & kubectl apply -f /root/service-definition-1.yaml
+cat service-definition-1.yaml & kubectl apply -f /root/service-definition-1.yaml
 apiVersion: v1
 kind: Service
 metadata:
