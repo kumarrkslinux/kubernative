@@ -1,4 +1,5 @@
-root@controlplane ~ ➜  cat network.yaml 
+```yaml
+cat network.yaml 
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
