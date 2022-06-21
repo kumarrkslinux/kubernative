@@ -60,7 +60,7 @@ kubectl create role developer --namespace=default --verb=list,create,delete --re
 To create a RoleBinding:- 
 kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
 
-
+OR
 
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
