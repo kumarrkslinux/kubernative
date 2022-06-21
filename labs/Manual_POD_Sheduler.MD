@@ -1,3 +1,5 @@
+
+```sh 
 root@controlplane ~ cat nginx.yaml 
 ---
 apiVersion: v1
