@@ -85,3 +85,33 @@ roleRef:
   kind: Role
   name: developer
   apiGroup: rbac.authorization.k8s.io
+  
+Add a new rule in the existing role developer to grant the dev-user permissions to create deployments in the blue namespace.
+
+Remember to add api group "apps".  
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: developer
+  namespace: blue
+rules:
+- apiGroups:
+  - apps
+  resourceNames:
+  - dark-blue-app
+  resources:
+  - pods
+  verbs:
+  - get
+  - watch
+  - create
+  - delete
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  verbs:
+  - get
+  - watch
+  - create
+  - delete
