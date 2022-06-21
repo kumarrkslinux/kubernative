@@ -52,14 +52,14 @@ Subjects:
   
 root@controlplane ~ ➜  kubectl get list --as dev-user
 Error from server (Forbidden): lists is forbidden: User "dev-user" cannot list resource "lists" in API group "" at the cluster scope
-```sh
+
 
 ```sh
 To create a Role:- 
 kubectl create role developer --namespace=default --verb=list,create,delete --resource=pods
 To create a RoleBinding:- 
 kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
-```sh 
+
 
 ```yaml
 kind: Role
