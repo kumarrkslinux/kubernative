@@ -48,4 +48,40 @@ Role:
 Subjects:
   Kind   Name                                             Namespace
   ----   ----                                             ---------
-  Group  system:bootstrappers:kubeadm:default-node-token  
+  Group  system:bootstrappers:kubeadm:default-node-token
+  
+root@controlplane ~ ➜  kubectl get list --as dev-user
+Error from server (Forbidden): lists is forbidden: User "dev-user" cannot list resource "lists" in API group "" at the cluster scope
+```sh
+
+```sh
+To create a Role:- 
+kubectl create role developer --namespace=default --verb=list,create,delete --resource=pods
+To create a RoleBinding:- 
+kubectl create rolebinding dev-user-binding --namespace=default --role=developer --user=dev-user
+```sh 
+
+```yaml
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: default
+  name: developer
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["list", "create","delete"]
+
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dev-user-binding
+subjects:
+- kind: User
+  name: dev-user
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: developer
+  apiGroup: rbac.authorization.k8s.io
