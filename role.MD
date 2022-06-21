@@ -1,3 +1,4 @@
+```sh
 root@controlplane ~ ➜  kubectl get role
 No resources found in default namespace.
 
@@ -27,3 +28,24 @@ kube-system   system::leader-locking-kube-scheduler            2022-06-21T05:04:
 kube-system   system:controller:bootstrap-signer               2022-06-21T05:04:46Z
 kube-system   system:controller:cloud-provider                 2022-06-21T05:04:46Z
 kube-system   system:controller:token-cleaner                  2022-06-21T05:04:46Z
+
+root@controlplane ~  kubectl describe role kube-proxy -n kube-system 
+Name:         kube-proxy
+Labels:       <none>
+Annotations:  <none>
+PolicyRule:
+  Resources   Non-Resource URLs  Resource Names  Verbs
+  ---------   -----------------  --------------  -----
+  configmaps  []                 [kube-proxy]    [get]
+  
+ root@controlplane ~ ➜  kubectl describe rolebindings.rbac.authorization.k8s.io kube-proxy -n kube-system 
+Name:         kube-proxy
+Labels:       <none>
+Annotations:  <none>
+Role:
+  Kind:  Role
+  Name:  kube-proxy
+Subjects:
+  Kind   Name                                             Namespace
+  ----   ----                                             ---------
+  Group  system:bootstrappers:kubeadm:default-node-token  
