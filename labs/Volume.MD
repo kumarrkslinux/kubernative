@@ -24,6 +24,9 @@ kodekloud/event-simulator
 Volume HostPath: /var/log/webapp 
 Volume Mount: /log
 
+kubectl get po webapp -o yaml > webapp.yaml 
+
+
 apiVersion: v1
 kind: Pod
 metadata:
@@ -46,3 +49,9 @@ spec:
       path: /var/log/webapp
       # this field is optional
       type: Directory
+
+kubectl replace -f: - It will remove the existing resource and will replace it with the new one from the given manifest file.
+
+root@controlplane ~ kubectl replace -f webapp.yaml --force
+pod "webapp" deleted
+pod/webapp replaced
