@@ -113,7 +113,8 @@ root@controlplane ~ ✖ kubectl replace -f webapp.yaml --force
 pod "webapp" deleted
 pod/webapp replaced
 
-4. Once PVC is deleted, Pv is available and can not be used 
+4. the PV is deleted automatically when the PVC is removed, and the data on the PVC will also be lost. In that case, it is more appropriate to use the “Retain” policy. With the “Retain” policy, if a user deletes a PersistentVolumeClaim, the corresponding PersistentVolume is not be deleted.
+
 root@controlplane ~ ➜  kubectl delete pvc claim-log-1 
 persistentvolumeclaim "claim-log-1" deleted
 
