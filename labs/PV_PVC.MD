@@ -1,5 +1,5 @@
 ```sh
-Create a Persistent Volume with the given specification.
+1. Create a Persistent Volume with the given specification.
 
 Volume Name: pv-log
 Storage: 100Mi
@@ -48,7 +48,7 @@ persistentvolume/pv-log   100Mi      RWX            Retain           Available  
 NAME                                STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 persistentvolumeclaim/claim-log-1   Pending                                                     2m26s
 
-After change the AccessMode to Many: 
+2. After change the AccessMode to Many: 
 
 root@controlplane ~ ➜  cat pvc.yml 
 apiVersion: v1
@@ -74,3 +74,41 @@ persistentvolume/pv-log   100Mi      RWX            Retain           Bound    de
 
 NAME                                STATUS   VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 persistentvolumeclaim/claim-log-1   Bound    pv-log   100Mi      RWX                           23s
+
+
+
+3. Update the webapp pod to use the persistent volume claim as its storage.
+
+Replace hostPath configured earlier with the newly created PersistentVolumeClaim.
+
+CheckCompleteIncomplete
+Name: webapp
+Image Name: kodekloud/event-simulator
+Volume: PersistentVolumeClaim=claim-log-1
+Volume Mount: /log
+
+
+root@controlplane ~ ➜  cat webapp.yaml 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp
+  namespace: default
+spec:
+  containers:
+  - env:
+    - name: LOG_HANDLERS
+      value: file
+    image: kodekloud/event-simulator
+    name: event-simulator
+    volumeMounts:
+    - mountPath: /log
+      name: log-volume
+  volumes:
+  - name: log-volume
+    persistentVolumeClaim:
+      claimName: claim-log-1
+      
+root@controlplane ~ ✖ kubectl replace -f webapp.yaml --force 
+pod "webapp" deleted
+pod/webapp replaced
