@@ -50,5 +50,30 @@ Let's fix that. Create a new PersistentVolumeClaim by the name of local-pvc that
 
 Inspect the pv local-pv for the specs.
 
+controlplane ~ ➜  cat pvc.yml 
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: local-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-storage
+  resources:
+    requests: 
+      storage: 500Mi
+
+controlplane ~ ➜  kubectl get pvc
+NAME        STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS    AGE
+local-pvc   Pending                                      local-storage   8m47s
 
 
+The StorageClass used by the PVC uses WaitForFirstConsumer volume binding mode. This means that the persistent volume will not bind to the claim until a pod makes use of the PVC to request storage.
+
+root@controlplane:~# kubectl describe pvc local-pvc | grep -A3 Events
+Events:
+  Type    Reason                Age               From                         Message
+  ----    ------                ----              ----                         -------
+  Normal  WaitForFirstConsumer  1s (x7 over 78s)  persistentvolume-controller  waiting for first consumer to be created before binding
+root@controlplane:~# 
