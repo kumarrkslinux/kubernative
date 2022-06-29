@@ -41,6 +41,9 @@ spec:
 root@controlplane ~ ✖ kubectl apply -f pvc.yml 
 persistentvolumeclaim/claim-log-1 created
 
-root@controlplane ~ ➜  kubectl get pvc
-NAME          STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
-claim-log-1   Pending                                                     4s
+root@controlplane ~ ➜  kubectl get pv,pvc
+NAME                      CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS      CLAIM   STORAGECLASS   REASON   AGE
+persistentvolume/pv-log   100Mi      RWX            Retain           Available                                   6m57s
+
+NAME                                STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/claim-log-1   Pending                                                     2m26s
