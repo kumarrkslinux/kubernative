@@ -77,3 +77,14 @@ Events:
   ----    ------                ----              ----                         -------
   Normal  WaitForFirstConsumer  1s (x7 over 78s)  persistentvolume-controller  waiting for first consumer to be created before binding
 root@controlplane:~# 
+
+---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: delayed-volume-sc
+provisioner: kubernetes.io/no-provisioner
+volumeBindingMode: WaitForFirstConsumer
+
+controlplane ~ ➜  kubectl apply -f sc.yml 
+storageclass.storage.k8s.io/delayed-volume-sc created
