@@ -112,3 +112,21 @@ spec:
 root@controlplane ~ ✖ kubectl replace -f webapp.yaml --force 
 pod "webapp" deleted
 pod/webapp replaced
+
+4. Once PVC is deleted, Pv is available and can not be used 
+root@controlplane ~ ➜  kubectl delete pvc claim-log-1 
+persistentvolumeclaim "claim-log-1" deleted
+
+root@controlplane ~ ➜  kubectl get pvc
+NAME          STATUS        VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+claim-log-1   Terminating   pv-log   100Mi      RWX                           9m46s
+
+root@controlplane ~ ➜  kubectl delete pod webapp 
+pod "webapp" deleted
+
+root@controlplane ~ ➜  kubectl get pvc
+No resources found in default namespace.
+
+root@controlplane ~ ➜  kubectl get pv
+NAME     CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS     CLAIM                 STORAGECLASS   REASON   AGE
+pv-log   100Mi      RWX            Retain           Released   default/claim-log-1                           20m
