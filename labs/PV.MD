@@ -7,6 +7,8 @@ Access Modes: ReadWriteMany
 Host Path: /pv/log
 Reclaim Policy: Retain
 
+# kubectl apply -f pv.yml
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
