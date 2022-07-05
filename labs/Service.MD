@@ -1,11 +1,13 @@
 ```sh
 What is the type of the default kubernetes service?
+ClusterIP
 
 controlplane ~ ➜  kubectl get service
 NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
 kubernetes   ClusterIP   10.43.0.1    <none>        443/TCP   4m11s
 
 What is the targetPort configured on the kubernetes service?
+6443
 
 controlplane ~ ➜  kubectl describe service kubernetes 
 Name:              kubernetes
