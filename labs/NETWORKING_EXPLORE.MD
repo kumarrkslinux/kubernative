@@ -1,3 +1,5 @@
+
+```sh
 What is the network interface configured for cluster connectivity on the controlplane node?
 
 root@controlplane ~ ✖ kubectl get nodes controlplane -o wide
