@@ -76,4 +76,73 @@ NAME   READY   STATUS    RESTARTS   AGE
 app    1/1     Running   0          11m
 
      
+6. What is the POD IP address range configured by weave?
+root@controlplane ~ ✖ kubectl logs weave-net-dgkk7 -n kube-system 
+error: a container name must be specified for pod weave-net-dgkk7, choose one of: [weave weave-npc] or one of the init containers: [weave-init]
 
+root@controlplane ~ ✖ kubectl logs weave-net-dgkk7 -n kube-system weave 
+INFO: 2022/07/07 05:38:35.952978 Command line options: map[conn-limit:200 datapath:datapath db-prefix:/weavedb/weave-net docker-api: expect-npc:true http-addr:127.0.0.1:6784 ipalloc-init:consensus=1 ipalloc-range:10.50.0.0/16 metrics-addr:0.0.0.0:6782 name:46:94:f3:cf:e9:3e nickname:node01 no-dns:true no-masq-local:true port:6783]
+INFO: 2022/07/07 05:38:35.953030 weave  2.8.1
+INFO: 2022/07/07 05:38:36.898674 Bridge type is bridged_fastdp
+INFO: 2022/07/07 05:38:36.898707 Communication between peers is unencrypted.
+INFO: 2022/07/07 05:38:36.927522 Our name is 46:94:f3:cf:e9:3e(node01)
+INFO: 2022/07/07 05:38:36.927599 Launch detected - using supplied peer list: [10.8.214.6]
+INFO: 2022/07/07 05:38:36.927692 Using "no-masq-local" LocalRangeTracker
+INFO: 2022/07/07 05:38:36.927748 Checking for pre-existing addresses on weave bridge
+INFO: 2022/07/07 05:38:36.928909 [allocator 46:94:f3:cf:e9:3e] No valid persisted data
+INFO: 2022/07/07 05:38:36.934074 [allocator 46:94:f3:cf:e9:3e] Initialising via deferred consensus
+INFO: 2022/07/07 05:38:36.934134 Sniffing traffic on datapath (via ODP)
+INFO: 2022/07/07 05:38:36.935478 ->[10.8.214.6:6783] attempting connection
+INFO: 2022/07/07 05:38:36.937007 ->[10.8.214.6:6783|22:0b:25:3d:ff:05(controlplane)]: connection ready; using protocol version 2
+INFO: 2022/07/07 05:38:36.937128 overlay_switch ->[22:0b:25:3d:ff:05(controlplane)] using fastdp
+INFO: 2022/07/07 05:38:36.937154 ->[10.8.214.6:6783|22:0b:25:3d:ff:05(controlplane)]: connection added (new peer)
+INFO: 2022/07/07 05:38:36.937870 Listening for HTTP control messages on 127.0.0.1:6784
+INFO: 2022/07/07 05:38:36.937936 Listening for metrics requests on 0.0.0.0:6782
+INFO: 2022/07/07 05:38:36.938518 ->[10.8.214.6:6783|22:0b:25:3d:ff:05(controlplane)]: connection fully established
+INFO: 2022/07/07 05:38:37.041770 sleeve ->[10.8.214.6:6783|22:0b:25:3d:ff:05(controlplane)]: Effective MTU verified at 1388
+INFO: 2022/07/07 05:38:37.129863 [kube-peers] Added myself to peer list &{[{22:0b:25:3d:ff:05 controlplane} {46:94:f3:cf:e9:3e node01}]}
+DEBU: 2022/07/07 05:38:37.138908 [kube-peers] Nodes that have disappeared: map[]
+INFO: 2022/07/07 05:38:37.243419 adding entry 10.50.192.0/18 to weaver-no-masq-local of 0
+INFO: 2022/07/07 05:38:37.243448 added entry 10.50.192.0/18 to weaver-no-masq-local of 0
+10.50.192.0
+DEBU: 2022/07/07 05:38:37.627777 registering for updates for node delete events
+INFO: 2022/07/07 05:38:42.139255 Discovered remote MAC 06:64:87:66:c3:66 at 22:0b:25:3d:ff:05(controlplane)
+INFO: 2022/07/07 05:38:42.141579 Discovered remote MAC 12:bb:8e:6d:22:15 at 22:0b:25:3d:ff:05(controlplane)
+
+7. What is the default gateway configured on the PODs scheduled on node01?
+Try scheduling a pod on node01 and check ip route output
+
+root@controlplane ~ ✖ kubectl run app --image=busybox --dry-run=client -o yaml -- sleep 1000 
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: app
+  name: app
+spec:
+  containers:
+  - args:
+    - sleep
+    - "1000"
+    image: busybox
+    name: app
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+root@controlplane ~ ➜  kubectl run app --image=busybox --dry-run=client -o yaml -- sleep 1000 > busybox.yaml
+
+root@controlplane ~ ➜  kubectl apply -f busybox.yaml 
+pod/app created
+
+root@controlplane ~ ✖ kubectl exec app -- route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.50.192.0     0.0.0.0         UG    0      0        0 eth0
+10.50.0.0       0.0.0.0         255.255.0.0     U     0      0        0 eth0
+
+root@controlplane ~ ➜  kubectl exec app -- ip route
+default via 10.50.192.0 dev eth0 
+10.50.0.0/16 dev eth0 scope link  src 10.50.192.1 
