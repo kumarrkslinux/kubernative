@@ -32,3 +32,12 @@ total 4
 root@controlplane /var/lib/kubelet ➜  ls -l /etc/cni/net.d/
 total 4
 -rw-r--r-- 1 root root 292 Jul  7 04:23 10-flannel.conflist
+
+5. Deploy weave-net networking solution to the cluster.
+
+Replace the default IP address and subnet of weave-net to the 10.50.0.0/16. 
+Please check the official weave installation and configuration guide which is available at the top right panel. 
+
+    1. Deploy weave
+
+     2. Wait for the app to run
