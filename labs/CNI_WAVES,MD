@@ -1,9 +1,9 @@
-#### Inspect the kubelet service and identify the network plugin configured for Kubernetes.
+1. Inspect the kubelet service and identify the network plugin configured for Kubernetes.
 
 root@controlplane ~ ➜  ps -ef |grep kubelet |grep network --color
 root      4263     1  0 04:22 ?        00:00:20 /usr/bin/kubelet --bootstrap-kubeconfig=/etc/kubernetes/bootstrap-kubelet.conf --kubeconfig=/etc/kubernetes/kubelet.conf --config=/var/lib/kubelet/config.yaml --network-plugin=cni --pod-infra-container-image=k8s.gcr.io/pause:3.6
 
-#### What is the path configured with all binaries of CNI supported plugins?
+2. What is the path configured with all binaries of CNI supported plugins?
 root@controlplane ➜  ls -l /opt/cni/bin/
 total 70540
 -rwxr-xr-x 1 root root  4159518 May 13  2020 bandwidth
@@ -23,12 +23,12 @@ total 70540
 -rwxr-xr-x 1 root root  3356587 May 13  2020 tuning
 -rwxr-xr-x 1 root root  4314446 May 13  2020 vlan
 
-#### What is the CNI plugin configured to be used on this kubernetes cluster?
+3. What is the CNI plugin configured to be used on this kubernetes cluster?
 root@controlplane /var/lib/kubelet ➜  ls -l /etc/cni/net.d/
 total 4
 -rw-r--r-- 1 root root 292 Jul  7 04:23 10-flannel.conflist
 
-#### What binary executable file will be run by kubelet after a container and its associated namespace are created.
+4. What binary executable file will be run by kubelet after a container and its associated namespace are created.
 root@controlplane /var/lib/kubelet ➜  ls -l /etc/cni/net.d/
 total 4
 -rw-r--r-- 1 root root 292 Jul  7 04:23 10-flannel.conflist
