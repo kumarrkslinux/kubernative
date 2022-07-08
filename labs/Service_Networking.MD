@@ -1,4 +1,5 @@
-1. What network range are the nodes in the cluster part of?
+1. Inspect the kubelet service and identify the network plugin configured for Kubernetes.
+2. What network range are the nodes in the cluster part of?
 
 Run the command: ip addr and look at the IP address assigned to the eth0 interfaces. Derive network range from that.
 
