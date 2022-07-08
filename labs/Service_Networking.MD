@@ -1,4 +1,4 @@
-```txt
+```doc
 1. What network range are the nodes in the cluster part of?
 
 Run the command: ip addr and look at the IP address assigned to the eth0 interfaces. Derive network range from that.
