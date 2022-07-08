@@ -110,3 +110,13 @@ I0708 04:30:02.758840       1 config.go:226] "Starting endpoint slice config con
 I0708 04:30:02.758866       1 shared_informer.go:240] Waiting for caches to sync for endpoint slice config
 I0708 04:30:02.859896       1 shared_informer.go:247] Caches are synced for endpoint slice config 
 I0708 04:30:02.859949       1 shared_informer.go:247] Caches are synced for service config 
+
+5. How does this Kubernetes cluster ensure that a kube-proxy pod runs on all nodes in the cluster?
+Inspect the kube-proxy pods and try to identify how they are deployed
+
+Run the command: kubectl get ds -n kube-system
+
+root@controlplane ~ ➜  kubectl get ds -n kube-system
+NAME         DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kube-proxy   2         2         2       2            2           kubernetes.io/os=linux   60m
+weave-net    2         2         2       2            2           <none>                   60m
