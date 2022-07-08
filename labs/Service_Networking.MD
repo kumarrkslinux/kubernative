@@ -89,3 +89,24 @@ root      3355  3192  0 04:29 ?        00:02:18 kube-apiserver --advertise-addre
 root      3526  3362  0 04:29 ?        00:00:48 kube-controller-manager --allocate-node-cidrs=true --authentication-kubeconfig=/etc/kubernetes/controller-manager.conf --authorization-kubeconfig=/etc/kubernetes/controller-manager.conf --bind-address=127.0.0.1 --client-ca-file=/etc/kubernetes/pki/ca.crt --cluster-cidr=10.244.0.0/16 --cluster-name=kubernetes --cluster-signing-cert-file=/etc/kubernetes/pki/ca.crt --cluster-signing-key-file=/etc/kubernetes/pki/ca.key --controllers=*,bootstrapsigner,tokencleaner --kubeconfig=/etc/kubernetes/controller-manager.conf --leader-elect=true --requestheader-client-ca-file=/etc/kubernetes/pki/front-proxy-ca.crt --root-ca-file=/etc/kubernetes/pki/ca.crt --service-account-private-key-file=/etc/kubernetes/pki/sa.key --service-cluster-ip-range=10.96.0.0/12 --use-service-account-credentials=true
 root     24278 18115  0 05:20 pts/0    00:00:00 grep --color=auto service-cluster-ip-range
   
+4. What type of proxy is the kube-proxy configured to use?
+Check the logs of the kube-proxy pods. Run the command: kubectl logs <kube-proxy-pod-name> -n kube-system
+
+root@controlplane ~ ✖ kubectl logs kube-proxy-ftqpj -n kube-system 
+I0708 04:30:02.580283       1 proxier.go:657] "Failed to load kernel module with modprobe, you can ignore this message when kube-proxy is running inside container without mounting /lib/modules" moduleName="ip_vs_wrr"
+I0708 04:30:02.582329       1 proxier.go:657] "Failed to load kernel module with modprobe, you can ignore this message when kube-proxy is running inside container without mounting /lib/modules" moduleName="ip_vs_sh"
+I0708 04:30:02.610819       1 node.go:163] Successfully retrieved node IP: 10.68.205.3
+I0708 04:30:02.610867       1 server_others.go:138] "Detected node IP" address="10.68.205.3"
+I0708 04:30:02.610898       1 server_others.go:561] "Unknown proxy mode, assuming iptables proxy" proxyMode=""
+I0708 04:30:02.656021       1 server_others.go:206] "Using iptables Proxier"
+I0708 04:30:02.656053       1 server_others.go:213] "kube-proxy running in dual-stack mode" ipFamily=IPv4
+I0708 04:30:02.656060       1 server_others.go:214] "Creating dualStackProxier for iptables"
+I0708 04:30:02.656078       1 server_others.go:491] "Detect-local-mode set to ClusterCIDR, but no IPv6 cluster CIDR defined, , defaulting to no-op detect-local for IPv6"
+I0708 04:30:02.733847       1 server.go:656] "Version info" version="v1.23.0"
+I0708 04:30:02.756541       1 conntrack.go:52] "Setting nf_conntrack_max" nf_conntrack_max=1179648
+I0708 04:30:02.758720       1 config.go:317] "Starting service config controller"
+I0708 04:30:02.758749       1 shared_informer.go:240] Waiting for caches to sync for service config
+I0708 04:30:02.758840       1 config.go:226] "Starting endpoint slice config controller"
+I0708 04:30:02.758866       1 shared_informer.go:240] Waiting for caches to sync for endpoint slice config
+I0708 04:30:02.859896       1 shared_informer.go:247] Caches are synced for endpoint slice config 
+I0708 04:30:02.859949       1 shared_informer.go:247] Caches are synced for service config 
