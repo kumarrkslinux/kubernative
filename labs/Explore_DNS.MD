@@ -1,3 +1,4 @@
+```
 1. Identify the DNS solution implemented in this cluster?
 
 coredns
@@ -128,3 +129,47 @@ Corefile:
 }
 
 Events:  <none>
+
+
+7. What name can be used to access the hr web server from the test Application?
+
+
+You can execute a curl command on the test pod to test. Alternatively, the test Application also has a UI. Access it using the tab at the top of your terminal named test-app
+
+web-service
+
+root@controlplane ~ ➜  kubectl get pods
+NAME                READY   STATUS    RESTARTS   AGE
+hr                  1/1     Running   0          15m
+simple-webapp-1     1/1     Running   0          14m
+simple-webapp-122   1/1     Running   0          14m
+test                1/1     Running   0          15m
+
+root@controlplane ~ ➜  kubectl get svc
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        59m
+test-service   NodePort    10.102.80.114   <none>        80:30080/TCP   16m
+web-service    ClusterIP   10.99.54.205    <none>        80/TCP         16m
+
+
+8. Which of the names CANNOT be used to access the HR service from the test pod?
+
+web.service.default.pod
+
+9. Which of the below name can be used to access the payroll service from the test application?
+web-service.payroll
+
+10. Which of the below name CANNOT be used to access the payroll service from the test application?
+web-service.payroll.cluster
+
+
+11. We just deployed a web server - webapp - that accesses a database mysql - server. However the web server is failing to connect to the database server. Troubleshoot and fix the issue.
+
+They could be in different namespaces. First locate the applications. The web server interface can be seen by clicking the tab Web Server at the top of your terminal.
+
+CheckCompleteIncomplete
+Web Server: webapp
+
+Uses the right DB_Host name
+
+
