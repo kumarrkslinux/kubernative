@@ -174,3 +174,15 @@ Uses the right DB_Host name
 Run the command: kubectl edit deploy webapp and correct the DB_Host value.
 Set the DB_Host environment variable to use mysql.payroll
 
+12. From the hr pod nslookup the mysql service and redirect the output to a file /root/CKA/nslookup.out
+
+olplane ~ ✖ kubectl exec -it hr -- nslookup mysql.payroll [mysql is pod name and payroll is name space]
+Server:         10.96.0.10
+Address:        10.96.0.10#53
+
+Name:   mysql.payroll.svc.cluster.local
+Address: 10.97.139.54
+
+
+root@controlplane ~ ➜  kubectl exec -it hr -- nslookup mysql.payroll > /root/CKA/nslookup.out
+
