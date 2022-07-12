@@ -153,13 +153,41 @@ kubernetes     ClusterIP   10.96.0.1       <none>        443/TCP        59m
 test-service   NodePort    10.102.80.114   <none>        80:30080/TCP   16m
 web-service    ClusterIP   10.99.54.205    <none>        80/TCP         16m
 
+Access from test to hr --> kubectl describe svc web-service |grep -i selector
+name=hr
 
 8. Which of the names CANNOT be used to access the HR service from the test pod?
 
 web.service.default.pod
 
 9. Which of the below name can be used to access the payroll service from the test application?
-web-service.payroll
+root@controlplane ~ ➜  kubectl get pods -n payroll 
+NAME    READY   STATUS    RESTARTS   AGE
+mysql   1/1     Running   0          28m
+web     1/1     Running   0          36m
+
+root@controlplane ~ ➜  kubectl get svc -n payroll 
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+mysql         ClusterIP   10.97.139.54     <none>        3306/TCP   29m
+web-service   ClusterIP   10.111.136.197   <none>        80/TCP     37m
+
+root@controlplane ~ ➜  kubectl describe svc web-service  -n payroll 
+Name:              web-service
+Namespace:         payroll
+Labels:            <none>
+Annotations:       <none>
+Selector:          name=web
+Type:              ClusterIP
+IP Families:       <none>
+IP:                10.111.136.197
+IPs:               10.111.136.197
+Port:              <unset>  80/TCP
+TargetPort:        80/TCP
+Endpoints:         10.244.0.4:80
+Session Affinity:  None
+Events:            <none>
+
+answer: web-service.payroll [Selector: name=web]
 
 10. Which of the below name CANNOT be used to access the payroll service from the test application?
 web-service.payroll.cluster
@@ -171,6 +199,70 @@ They could be in different namespaces. First locate the applications. The web se
 
 CheckCompleteIncomplete
 Web Server: webapp
+
+root@controlplane ~ ➜  kubectl get pods -A
+NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE
+default       hr                                     1/1     Running   0          42m
+default       simple-webapp-1                        1/1     Running   0          42m
+default       simple-webapp-122                      1/1     Running   0          42m
+default       test                                   1/1     Running   0          42m
+default       webapp-c995bfc7b-p9ddf                 1/1     Running   0          31m
+kube-system   coredns-74ff55c5b-lk6bv                1/1     Running   0          83m
+kube-system   coredns-74ff55c5b-m7z8l                1/1     Running   0          84m
+kube-system   etcd-controlplane                      1/1     Running   0          84m
+kube-system   kube-apiserver-controlplane            1/1     Running   0          84m
+kube-system   kube-controller-manager-controlplane   1/1     Running   0          84m
+kube-system   kube-flannel-ds-klx4f                  1/1     Running   0          84m
+kube-system   kube-proxy-7xd4n                       1/1     Running   0          84m
+kube-system   kube-scheduler-controlplane            1/1     Running   0          84m
+payroll       mysql                                  1/1     Running   0          35m  - since coming from payrool 
+payroll       web                                    1/1     Running   0          42m
+
+root@controlplane ~ ➜  kubectl get svc -n payroll 
+NAME          TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+mysql         ClusterIP   10.97.139.54     <none>        3306/TCP   35m
+web-service   ClusterIP   10.111.136.197   <none>        80/TCP     43m
+
+kubectl get pods -A
+
+
+root@controlplane ~ ➜  kubectl edit deployments.apps webapp 
+Name:                   webapp
+Namespace:              default
+CreationTimestamp:      Tue, 12 Jul 2022 04:34:31 +0000
+Labels:                 name=webapp
+Annotations:            deployment.kubernetes.io/revision: 2
+Selector:               name=webapp
+Replicas:               1 desired | 1 updated | 1 total | 1 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  name=webapp
+  Containers:
+   simple-webapp-mysql:
+    Image:      mmumshad/simple-webapp-mysql
+    Port:       8080/TCP
+    Host Port:  0/TCP
+    Environment:
+      DB_Host:      mysql.payroll [changed from mysql]
+      DB_User:      root
+      DB_Password:  paswrd
+    Mounts:         <none>
+  Volumes:          <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   webapp-c995bfc7b (1/1 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  38m   deployment-controller  Scaled up replica set webapp-84ffb6ddff to 1
+  Normal  ScalingReplicaSet  34m   deployment-controller  Scaled up replica set webapp-c995bfc7b to 1
+  Normal  ScalingReplicaSet  34m   deployment-controller  Scaled down replica set webapp-84ffb6ddff to 0
 
 Uses the right DB_Host name
 Run the command: kubectl edit deploy webapp and correct the DB_Host value.
