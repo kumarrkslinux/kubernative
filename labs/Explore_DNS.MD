@@ -27,6 +27,8 @@ NAME       TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)                  AGE
 kube-dns   ClusterIP   10.96.0.10   <none>        53/UDP,53/TCP,9153/TCP   49m
   
 4. Where is the configuration file located for configuring the CoreDNS service?
+root@controlplane ~ ➜  kubectl get deployments.apps  -n kube-system -o yaml > file.yml
+
 root@controlplane ~ ➜  kubectl get deployments.apps  -n kube-system 
 NAME      READY   UP-TO-DATE   AVAILABLE   AGE
 coredns   2/2     2            2           53m
