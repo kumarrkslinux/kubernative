@@ -171,5 +171,6 @@ CheckCompleteIncomplete
 Web Server: webapp
 
 Uses the right DB_Host name
-
+Run the command: kubectl edit deploy webapp and correct the DB_Host value.
+Set the DB_Host environment variable to use mysql.payroll
 
