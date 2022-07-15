@@ -1,3 +1,4 @@
+```
 1. Which namespace is the Ingress Controller deployed in? ingress-nginx
 
 root@controlplane ~ ➜  kubectl get all -A
