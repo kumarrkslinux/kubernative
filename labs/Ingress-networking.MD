@@ -119,3 +119,45 @@ Events:
   
   7. If the requirement does not match any of the configured paths what service are the requests forwarded to?
       From the above output default-backend-service
+  
+ 8.  You are requested to change the URLs at which the applications are made available.
+
+      Make the video application available at /stream.
+
+      1.Ingress: ingress-wear-watch
+
+      2. Path: /stream
+
+      3. Backend Service: video-service
+
+      4. Backend Service Port: 8080
+  
+  Solution manifest file to change the path to the video streaming application to /stream as follows:
+  kubectl edit ingress -n app-space and change the value
+  Or 
+  apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: ingress-wear-watch
+  namespace: app-space
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: wear-service
+            port: 
+              number: 8080
+        path: /wear
+        pathType: Prefix
+      - backend:
+          service:
+            name: video-service
+            port: 
+              number: 8080
+        path: /stream
+        pathType: Prefix
