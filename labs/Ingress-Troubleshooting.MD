@@ -1,8 +1,11 @@
-ngress-Controller Logs and Events¶
+
+
+# ngress-Controller Logs and Events¶
 There are many ways to troubleshoot the ingress-controller. The following are basic troubleshooting methods to obtain more information.
 
-Check the Ingress Resource Events¶
+### Check the Ingress Resource Events¶
 
+```
 $ kubectl get ing -n <namespace-of-ingress-resource>
 NAME           HOSTS      ADDRESS     PORTS     AGE
 cafe-ingress   cafe.com   10.0.2.15   80        25s
@@ -59,7 +62,7 @@ events {
 }
 http {
 ....
-Check if used Services Exist¶
+### Check if used Services Exist¶
 
 $ kubectl get svc --all-namespaces
 NAMESPACE     NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
@@ -83,10 +86,11 @@ $ kubectl edit deploy -n <namespace-of-ingress-controller> ingress-nginx-control
 --v=2 shows details using diff about the changes in the configuration in nginx
 --v=3 shows details about the service, Ingress rule, endpoint changes and it dumps the nginx configuration in JSON format
 --v=5 configures NGINX in debug mode
-Authentication to the Kubernetes API Server¶
+```
+### Authentication to the Kubernetes API Server¶
 A number of components are involved in the authentication process and the first step is to narrow down the source of the problem, namely whether it is a problem with service authentication or with the kubeconfig file.
 
-Both authentications must work:
+### Both authentications must work:
 
 
 +-------------+   service          +------------+
@@ -94,7 +98,8 @@ Both authentications must work:
 +  apiserver  +<-------------------+  ingress   |
 |             |                    | controller |
 +-------------+                    +------------+
-Service authentication
+
+#### Service authentication
 
 The Ingress controller needs information from apiserver. Therefore, authentication is required, which can be achieved in a couple of ways:
 
@@ -124,12 +129,12 @@ Kubernetes                                                  Workstation
 |         |<--------------------------------------------------------|        |
 |                                                   |     |                  |
 +---------------------------------------------------+     +------------------+
-Service Account¶
+### Service Account¶
 If using a service account to connect to the API server, the ingress-controller expects the file /var/run/secrets/kubernetes.io/serviceaccount/token to be present. It provides a secret token that is required to authenticate with the API server.
 
 Verify with the following commands:
 
-
+```
 # start a container that contains curl
 $ kubectl run -it --rm test --image=curlimages/curl --restart=Never -- /bin/sh
 
@@ -184,10 +189,11 @@ More information:
 
 User Guide: Service Accounts
 Cluster Administrator Guide: Managing Service Accounts
-Kube-Config¶
+
+### Kube-Config¶
 If you want to use a kubeconfig file for authentication, follow the deploy procedure and add the flag --kubeconfig=/etc/kubernetes/kubeconfig.yaml to the args section of the deployment.
 
-Using GDB with Nginx¶
+###Using GDB with Nginx¶
 Gdb can be used to with nginx to perform a configuration dump. This allows us to see which configuration is being used, as well as older configurations.
 
 Note: The below is based on the nginx documentation.
@@ -202,7 +208,7 @@ Obtain the Docker Container Running nginx
 $ docker ps | grep ingress-nginx-controller
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 d9e1d243156a        registry.k8s.io/ingress-nginx/controller   "/usr/bin/dumb-init …"   19 minutes ago      Up 19 minutes                                                                            k8s_ingress-nginx-controller_ingress-nginx-controller-67956bf89d-mqxzt_kube-system_079f31ec-aa37-11e8-ad39-080027a227db_0
-Exec into the container
+###Exec into the container
 
 
 $ docker exec -it --user=0 --privileged d9e1d243156a bash
