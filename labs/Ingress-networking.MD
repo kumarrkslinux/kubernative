@@ -219,3 +219,61 @@ spec:
               number: 8080
         path: /eat
         pathType: Prefix
+
+  10. A new payment service has been introduced. Since it is critical, the new application is deployed in its own namespace.
+  Identify the namespace in which the new application is deployed. ? critical-space   
+  root@controlplane ~ ✖ kubectl get deployments.apps -A
+NAMESPACE        NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+app-space        default-backend            1/1     1            1           30m
+app-space        webapp-food                1/1     1            1           3m47s
+app-space        webapp-video               1/1     1            1           30m
+app-space        webapp-wear                1/1     1            1           30m
+critical-space   webapp-pay                 1/1     1            1           27s
+ingress-nginx    ingress-nginx-controller   1/1     1            1           30m
+kube-system      coredns                    2/2     2            2           42m
+  
+11. You are requested to make the new application available at /pay.
+Create a new Ingress for the new pay application in the critical-space namespace.
+Use the command kubectl get svc -n critical-space to know the service and port details.
+  
+  root@controlplane ~ ✖ kubectl get svc -n critical-space
+NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+pay-service   ClusterIP   10.105.98.228   <none>        8282/TCP   9m35s
+    
+Identify and implement the best approach to making this application available on the ingress controller and test to make sure its working. Look into annotations: rewrite-target as well.
+
+   1. Ingress Created
+
+   2. Path: /pay
+
+   3. Configure correct backend service
+
+   4.Configure correct backend port
+  
+ root@controlplane ~ ➜  cat ingr.yml
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: newapplication
+  namespace: critical-space
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: pay-service
+            port:
+              number: 8282
+        path: /pay
+        pathType: Prefix
+  
+  you can try this way 
+  # echo ' --------
+  ------' | kubectl create -f -
+root@controlplane ~ ➜  kubectl  apply -f  ingr.yml 
+ingress.networking.k8s.io/newapplication created
