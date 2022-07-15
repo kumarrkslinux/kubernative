@@ -88,3 +88,34 @@ NAME              READY   UP-TO-DATE   AVAILABLE   AGE
 default-backend   1/1     1            1           9m11s
 webapp-video      1/1     1            1           9m11s
 webapp-wear       1/1     1            1           9m11s
+
+  5. Which namespace is the Ingress Resource deployed in?
+  
+root@controlplane ~ ➜  kubectl get ingress --all-namespaces
+NAMESPACE   NAME                 CLASS    HOSTS   ADDRESS         PORTS   AGE
+app-space   ingress-wear-watch   <none>   *       10.110.227.86   80      11m
+  
+  6. What is the Host configured on the Ingress Resource?
+The host entry defines the domain name that users use to reach the application like www.google.com
+  
+  root@controlplane ~ ➜  kubectl describe ingress -n app-space ingress-wear-watch 
+Name:             ingress-wear-watch
+Labels:           <none>
+Namespace:        app-space
+Address:          10.110.227.86
+Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /wear    wear-service:8080 (10.244.0.4:8080)
+              /watch   video-service:8080 (10.244.0.6:8080)
+Annotations:  nginx.ingress.kubernetes.io/rewrite-target: /
+              nginx.ingress.kubernetes.io/ssl-redirect: false
+Events:
+  Type    Reason  Age                From                      Message
+  ----    ------  ----               ----                      -------
+  Normal  Sync    12m (x2 over 12m)  nginx-ingress-controller  Scheduled for sync
+  
+  7. If the requirement does not match any of the configured paths what service are the requests forwarded to?
+      From the above output Default backend:
