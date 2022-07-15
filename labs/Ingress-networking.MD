@@ -161,3 +161,61 @@ spec:
               number: 8080
         path: /stream
         pathType: Prefix
+
+  9. You are requested to add a new path to your ingress to make the food delivery application available to your customers.
+
+    Make the new application available at /eat.
+
+    1. Ingress: ingress-wear-watch
+
+    2.Path: /eat
+
+    3.Backend Service: food-service
+
+    4. Backend Service Port: 8080
+  
+  kubectl edit ingress -n app-space and change the value
+  - backend:
+            service:
+              name: food-service
+              port:
+                number: 8080
+          path: /eat
+          pathType: Prefix
+  
+  or 
+  
+  Solution manifest file to add a new path to our ingress service to make the application available at /eat as follows:
+  apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  name: ingress-wear-watch
+  namespace: app-space
+spec:
+  rules:
+  - http:
+      paths:
+      - backend:
+          service:
+            name: wear-service
+            port: 
+              number: 8080
+        path: /wear
+        pathType: Prefix
+      - backend:
+          service:
+            name: video-service
+            port: 
+              number: 8080
+        path: /stream
+        pathType: Prefix
+      - backend:
+          service:
+            name: food-service
+            port: 
+              number: 8080
+        path: /eat
+        pathType: Prefix
