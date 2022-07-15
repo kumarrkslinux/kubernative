@@ -118,4 +118,4 @@ Events:
   Normal  Sync    12m (x2 over 12m)  nginx-ingress-controller  Scheduled for sync
   
   7. If the requirement does not match any of the configured paths what service are the requests forwarded to?
-      From the above output Default backend:
+      From the above output default-backend-service
