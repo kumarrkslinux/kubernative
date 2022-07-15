@@ -1,0 +1,89 @@
+1. Which namespace is the Ingress Controller deployed in? ingress-nginx
+
+root@controlplane ~ ➜  kubectl get all -A
+NAMESPACE       NAME                                            READY   STATUS      RESTARTS   AGE
+app-space       pod/default-backend-7f87f4c484-jclm2            1/1     Running     0          3m47s
+app-space       pod/webapp-video-d54b764b6-tz5xs                1/1     Running     0          3m48s
+app-space       pod/webapp-wear-5bb44cf565-vd5sv                1/1     Running     0          3m48s
+ingress-nginx   pod/ingress-nginx-admission-create-hdlp2        0/1     Completed   0          3m45s
+ingress-nginx   pod/ingress-nginx-admission-patch-sgr82         0/1     Completed   0          3m45s
+ingress-nginx   pod/ingress-nginx-controller-6b79d8694c-swc2m   1/1     Running     0          3m45s
+kube-system     pod/coredns-64897985d-k2wpj                     1/1     Running     0          16m
+kube-system     pod/coredns-64897985d-qtlbg                     1/1     Running     0          16m
+kube-system     pod/etcd-controlplane                           1/1     Running     0          16m
+kube-system     pod/kube-apiserver-controlplane                 1/1     Running     0          16m
+kube-system     pod/kube-controller-manager-controlplane        1/1     Running     0          16m
+kube-system     pod/kube-flannel-ds-zz866                       1/1     Running     0          16m
+kube-system     pod/kube-proxy-hfh9v                            1/1     Running     0          16m
+kube-system     pod/kube-scheduler-controlplane                 1/1     Running     0          16m
+
+NAMESPACE       NAME                                         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+app-space       service/default-backend-service              ClusterIP   10.102.91.209    <none>        80/TCP                       3m47s
+app-space       service/video-service                        ClusterIP   10.107.21.121    <none>        8080/TCP                     3m48s
+app-space       service/wear-service                         ClusterIP   10.101.165.234   <none>        8080/TCP                     3m48s
+default         service/kubernetes                           ClusterIP   10.96.0.1        <none>        443/TCP                      16m
+ingress-nginx   service/ingress-nginx-controller             NodePort    10.110.227.86    <none>        80:30080/TCP,443:32103/TCP   3m45s
+ingress-nginx   service/ingress-nginx-controller-admission   ClusterIP   10.103.116.131   <none>        443/TCP                      3m45s
+kube-system     service/kube-dns                             ClusterIP   10.96.0.10       <none>        53/UDP,53/TCP,9153/TCP       16m
+
+NAMESPACE     NAME                             DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR            AGE
+kube-system   daemonset.apps/kube-flannel-ds   1         1         1       1            1           <none>                   16m
+kube-system   daemonset.apps/kube-proxy        1         1         1       1            1           kubernetes.io/os=linux   16m
+
+NAMESPACE       NAME                                       READY   UP-TO-DATE   AVAILABLE   AGE
+app-space       deployment.apps/default-backend            1/1     1            1           3m48s
+app-space       deployment.apps/webapp-video               1/1     1            1           3m48s
+app-space       deployment.apps/webapp-wear                1/1     1            1           3m48s
+ingress-nginx   deployment.apps/ingress-nginx-controller   1/1     1            1           3m45s
+kube-system     deployment.apps/coredns                    2/2     2            2           16m
+
+NAMESPACE       NAME                                                  DESIRED   CURRENT   READY   AGE
+app-space       replicaset.apps/default-backend-7f87f4c484            1         1         1       3m47s
+app-space       replicaset.apps/webapp-video-d54b764b6                1         1         1       3m48s
+app-space       replicaset.apps/webapp-wear-5bb44cf565                1         1         1       3m48s
+ingress-nginx   replicaset.apps/ingress-nginx-controller-6b79d8694c   1         1         1       3m45s
+kube-system     replicaset.apps/coredns-64897985d                     2         2         2       16m
+
+NAMESPACE       NAME                                       COMPLETIONS   DURATION   AGE
+ingress-nginx   job.batch/ingress-nginx-admission-create   1/1           20s        3m45s
+ingress-nginx   job.batch/ingress-nginx-admission-patch    1/1           21s        3m45s
+  
+  
+2. What is the name of the Ingress Controller Deployment?
+  ingress-nginx-controller
+  
+root@controlplane ~ ➜  kubectl get deploy -A
+NAMESPACE       NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+app-space       default-backend            1/1     1            1           6m49s
+app-space       webapp-video               1/1     1            1           6m49s
+app-space       webapp-wear                1/1     1            1           6m49s
+ingress-nginx   ingress-nginx-controller   1/1     1            1           6m46s
+kube-system     coredns                    2/2     2            2           19m
+  
+3. Which namespace is the APP deployed in?
+  
+  root@controlplane ~ ➜  kubectl get po -A
+NAMESPACE       NAME                                        READY   STATUS      RESTARTS   AGE
+app-space       default-backend-7f87f4c484-jclm2            1/1     Running     0          7m58s
+app-space       webapp-video-d54b764b6-tz5xs                1/1     Running     0          7m59s
+app-space       webapp-wear-5bb44cf565-vd5sv                1/1     Running     0          7m59s
+ingress-nginx   ingress-nginx-admission-create-hdlp2        0/1     Completed   0          7m56s
+ingress-nginx   ingress-nginx-admission-patch-sgr82         0/1     Completed   0          7m56s
+ingress-nginx   ingress-nginx-controller-6b79d8694c-swc2m   1/1     Running     0          7m56s
+kube-system     coredns-64897985d-k2wpj                     1/1     Running     0          20m
+kube-system     coredns-64897985d-qtlbg                     1/1     Running     0          20m
+kube-system     etcd-controlplane                           1/1     Running     0          20m
+kube-system     kube-apiserver-controlplane                 1/1     Running     0          20m
+kube-system     kube-controller-manager-controlplane        1/1     Running     0          20m
+kube-system     kube-flannel-ds-zz866                       1/1     Running     0          20m
+kube-system     kube-proxy-hfh9v                            1/1     Running     0          20m
+kube-system     kube-scheduler-controlplane                 1/1     Running     0          20m
+  
+ 4. How many applications are deployed in the app-space namespace?
+Count the number of deployments in this namespace. 3 
+  
+ root@controlplane ~ ➜  kubectl get deploy --namespace app-space
+NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+default-backend   1/1     1            1           9m11s
+webapp-video      1/1     1            1           9m11s
+webapp-wear       1/1     1            1           9m11s
