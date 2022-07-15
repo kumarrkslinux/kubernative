@@ -1,6 +1,6 @@
 ```html
 
-https://kubernetes.github.io/ingress-nginx/
+https://kubernetes.github.io/ingress-nginx/ - example and troubleshoot
 
 1. Which namespace is the Ingress Controller deployed in? ingress-nginx
 
