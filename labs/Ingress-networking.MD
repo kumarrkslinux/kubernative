@@ -1,4 +1,7 @@
 ```html
+
+https://kubernetes.github.io/ingress-nginx/
+
 1. Which namespace is the Ingress Controller deployed in? ingress-nginx
 
 root@controlplane ~ ➜  kubectl get all -A
@@ -274,6 +277,6 @@ spec:
   
   you can try this way 
   # echo ' --------
-  ------' | kubectl create -f -
+  #------' | kubectl create -f -
 root@controlplane ~ ➜  kubectl  apply -f  ingr.yml 
 ingress.networking.k8s.io/newapplication created
