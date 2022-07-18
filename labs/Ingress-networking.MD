@@ -286,3 +286,54 @@ spec:
   #------' | kubectl create -f -
 root@controlplane ~ ➜  kubectl  apply -f  ingr.yml 
 ingress.networking.k8s.io/newapplication created
+  
+  
+  created namespace,configobject,service,account and Roles and RoleBindings for the ServiceAccount done by trainer. 
+  
+  root@controlplane ~ ➜  kubectl get deployments.apps -A
+NAMESPACE     NAME              READY   UP-TO-DATE   AVAILABLE   AGE
+app-space     default-backend   1/1     1            1           2m25s
+app-space     webapp-video      1/1     1            1           2m25s
+app-space     webapp-wear       1/1     1            1           2m25s
+kube-system   coredns           2/2     2            2           31m
+
+root@controlplane ~ ➜  kubectl create namespace ingress-space
+namespace/ingress-space created
+
+root@controlplane ~ ➜  kubectl create configmap nginx-configuration -n ingress-space 
+configmap/nginx-configuration created
+
+root@controlplane ~ ➜  kubectl create serviceaccount ingress-serviceaccount -n ingress-space 
+serviceaccount/ingress-serviceaccount created
+
+root@controlplane ~ ➜  kubectl get roles -n ingress-space 
+NAME           CREATED AT
+ingress-role   2022-07-18T05:27:49Z
+
+root@controlplane ~ ➜  kubectl describe roles ingress-role -n ingress-space 
+Name:         ingress-role
+Labels:       app.kubernetes.io/name=ingress-nginx
+              app.kubernetes.io/part-of=ingress-nginx
+Annotations:  <none>
+PolicyRule:
+  Resources   Non-Resource URLs  Resource Names                     Verbs
+  ---------   -----------------  --------------                     -----
+  configmaps  []                 []                                 [get create]
+  configmaps  []                 [ingress-controller-leader-nginx]  [get update]
+  endpoints   []                 []                                 [get]
+  namespaces  []                 []                                 [get]
+  pods        []                 []                                 [get]
+  secrets     []                 []                                 [get]     
+
+root@controlplane ~ ➜  kubectl describe rolebindings.rbac.authorization.k8s.io -n ingress-space 
+Name:         ingress-role-binding
+Labels:       app.kubernetes.io/name=ingress-nginx
+              app.kubernetes.io/part-of=ingress-nginx
+Annotations:  <none>
+Role:
+  Kind:  Role
+  Name:  ingress-role
+Subjects:
+  Kind            Name                    Namespace
+  ----            ----                    ---------
+  ServiceAccount  ingress-serviceaccount  
