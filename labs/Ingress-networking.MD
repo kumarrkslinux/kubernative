@@ -240,7 +240,9 @@ Create a new Ingress for the new pay application in the critical-space namespace
 Use the command kubectl get svc -n critical-space to know the service and port details.
 
   kubectl create ingress ingress-pay -n critical-space --rules="/pay=pay-service:8282"
-  
+  and add annotations 
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
   or 
   
   root@controlplane ~ ✖ kubectl get svc -n critical-space
