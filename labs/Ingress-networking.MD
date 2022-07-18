@@ -389,3 +389,6 @@ spec:
               containerPort: 80
             - name: https
               containerPort: 443
+
+root@controlplane ~ ➜  kubectl apply -f ingress-controller.yaml 
+deployment.apps/ingress-controller created
