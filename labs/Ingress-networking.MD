@@ -392,3 +392,7 @@ spec:
 
 root@controlplane ~ ➜  kubectl apply -f ingress-controller.yaml 
 deployment.apps/ingress-controller created
+
+14. Create the ingress resource to make the applications available at /wear and /watch on the Ingress service.
+
+Create the ingress in the app-space namespace.
