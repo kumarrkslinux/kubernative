@@ -238,6 +238,10 @@ kube-system      coredns                    2/2     2            2           42m
 11. You are requested to make the new application available at /pay.
 Create a new Ingress for the new pay application in the critical-space namespace.
 Use the command kubectl get svc -n critical-space to know the service and port details.
+
+  kubectl create ingress ingress-pay -n critical-space --rules="/pay=pay-service:8282"
+  
+  or 
   
   root@controlplane ~ ✖ kubectl get svc -n critical-space
 NAME          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
