@@ -459,3 +459,5 @@ spec:
            name: video-service
            port:
             number: 8080
+
+  root@controlplane ~ ➜ kubectl logs ingress-controller -n app-spaces
