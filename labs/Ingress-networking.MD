@@ -396,3 +396,66 @@ deployment.apps/ingress-controller created
 14. Create the ingress resource to make the applications available at /wear and /watch on the Ingress service.
 
 Create the ingress in the app-space namespace.
+  
+1. Ingress Created
+    Path: /wear
+    Path: /watch
+    Configure correct backend service for /wear
+    Configure correct backend service for /watch
+    Configure correct backend port for /wear service
+    Configure correct backend port for /watch service
+ 
+
+  root@controlplane ~ ➜  kubectl get svc -n app-space 
+NAME                   TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+default-http-backend   ClusterIP   10.100.173.97    <none>        80/TCP     22m
+video-service          ClusterIP   10.98.78.117     <none>        8080/TCP   22m
+wear-service           ClusterIP   10.102.159.107   <none>        8080/TCP   22m
+  
+root@controlplane ~ ➜  kubectl create ingress ingress-wear--watch-resource -n app-space --rule="/wear=wear-service:8080" --rule="/watch=video-service:8080"ingress.networking.k8s.io/ingress-wear--watch-resource created  
+  
+root@controlplane ~ ➜  kubectl describe ingress ingress-wear--watch-resource -n app-space
+Name:             ingress-wear--watch-resource
+Namespace:        app-space
+Address:          
+Default backend:  default-http-backend:80 (<error: endpoints "default-http-backend" not found>)
+Rules:
+  Host        Path  Backends
+  ----        ----  --------
+  *           
+              /wear    wear-service:8080 (10.244.0.6:8080)
+              /watch   video-service:8080 (10.244.0.5:8080)
+Annotations:  <none>
+Events:       <none>
+
+  
+  Or 
+  
+  
+  ---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-wear-watch
+  namespace: app-space
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /wear
+        pathType: Prefix
+        backend:
+          service:
+           name: wear-service
+           port: 
+            number: 8080
+      - path: /watch
+        pathType: Prefix
+        backend:
+          service:
+           name: video-service
+           port:
+            number: 8080
