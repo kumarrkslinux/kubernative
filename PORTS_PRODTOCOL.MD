@@ -2,7 +2,7 @@
 When running Kubernetes in an environment with strict network boundaries, such as on-premises datacenter with physical network firewalls or Virtual Networks in Public Cloud, it is useful to be aware of the ports and protocols used by Kubernetes components.
 
 ### Control plane
-|Protocol	| Direction |	Port |Range	|Purpose	|Used By|
+||Protocol	|| Direction ||	Port ||Range	||Purpose	||Used By||
 |TCP|	Inbound|	6443|	Kubernetes |API |server|	All|
 |TCP	|Inbound	|2379-2380	|etcd server client API	|kube-apiserver, etcd|
 |TCP	|Inbound	|10250	|Kubelet API|	Self, Control plane|
