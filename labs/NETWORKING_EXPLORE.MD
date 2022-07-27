@@ -132,7 +132,10 @@ what is the port used by scheduler ?
 root@controlplane ~ ➜  netstat -nplt|grep scheduler
 tcp        0      0 127.0.0.1:10259         0.0.0.0:*               LISTEN      3463/kube-scheduler 
 
-  
+
+Notice that ETCD is listening on two ports. Which of these have more client connections established?
+2379
+
 root@controlplane ~ ➜  netstat -nplt|grep etcd
 tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      3712/etcd           
 tcp        0      0 10.6.57.9:2379          0.0.0.0:*               LISTEN      3712/etcd           
