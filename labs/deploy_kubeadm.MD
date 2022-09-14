@@ -1,13 +1,13 @@
 ### deploy_kubeadm ##
 
-### Install the kubeadm and kubelet packages on the controlplane and node01.
+#####  Install the kubeadm and kubelet packages on the controlplane and node01.
 
-### Use the exact version of 1.23.0-00 for both. 
+#####  Use the exact version of 1.23.0-00 for both. 
 
 
-### Follow the steps in the official documentation.
+#####  Follow the steps in the official documentation.
 
-### These steps have to be performed on both nodes.
+#####  These steps have to be performed on both nodes.
 
 ```
 set net.bridge.bridge-nf-call-iptables to 1:
@@ -22,8 +22,8 @@ EOF
 sudo sysctl --system
 ```
 
-### The docker runtime has already been installed on both nodes, so you may skip this step.
-### Install kubeadm, kubectl and kubelet on all nodes:
+#####  The docker runtime has already been installed on both nodes, so you may skip this step.
+#####  Install kubeadm, kubectl and kubelet on all nodes:
 ```
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
@@ -38,7 +38,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 
 
-### Initialize Control Plane Node (Master Node). Use the following options:
+#####  Initialize Control Plane Node (Master Node). Use the following options:
 
 
 apiserver-advertise-address - Use the IP address allocated to eth0 on the controlplane node
