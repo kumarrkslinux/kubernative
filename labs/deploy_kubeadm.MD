@@ -38,7 +38,7 @@ sudo apt-mark hold kubelet kubeadm kubectl
 
 ```
 
-#####  Initialize Control Plane Node (Master Node). Use the following options:
+###  Initialize Control Plane Node (Master Node). Use the following options:
 
 
 apiserver-advertise-address - Use the IP address allocated to eth0 on the controlplane node
