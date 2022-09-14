@@ -132,3 +132,37 @@ root@controlplane ~ ➜  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/confi
 root@controlplane ~ ✖  sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ``` 
+
+
+### Join node01 to the cluster using the join token
+
+```
+root@controlplane ~ ✖ kubeadm token create --print-join-command
+kubeadm join 10.9.6.9:6443 --token zf0ukt.kpzhhech0yx2lk9m --discovery-token-ca-cert-hash sha256:f7247b45f3b8216a458026c65ff61a20483144a75b4ed63b9cb418ce3862ec93 
+
+root@node01 ~ ➜  kubeadm join 10.9.6.9:6443 --token zf0ukt.kpzhhech0yx2lk9m --discovery-token-ca-cert-hash sha256:f7247b45f3b8216a458026c65ff61a20483144a75b4ed63b9cb418ce3862ec93
+[preflight] Running pre-flight checks
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+W0914 05:28:25.299604    8411 utils.go:69] The recommended value for "resolvConf" in "KubeletConfiguration" is: /run/systemd/resolve/resolv.conf; the provided value is: /run/systemd/resolve/resolv.conf
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster
+
+``` 
+### Install a Network Plugin. As a default, we will go with flannel
+
+root@controlplane ~ ➜  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+namespace/kube-flannel created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds created
