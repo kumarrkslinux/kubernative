@@ -159,6 +159,7 @@ Run 'kubectl get nodes' on the control-plane to see this node join the cluster
 ``` 
 ### Install a Network Plugin. As a default, we will go with flannel
 
+```
 root@controlplane ~ ➜  kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 namespace/kube-flannel created
 clusterrole.rbac.authorization.k8s.io/flannel created
