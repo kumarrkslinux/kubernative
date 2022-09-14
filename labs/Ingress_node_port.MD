@@ -1,5 +1,5 @@
 
-```yaml
+```
 ~/k8s$ cat deploy.yml
 apiVersion: apps/v1
 kind: Deployment
@@ -55,7 +55,7 @@ spec:
           serviceName: my-nodeport-service
           servicePort: 443
         path: /
-```yaml 
+```
 
 ``` 
 ~/k8s$ kubectl get deployments -o wide
