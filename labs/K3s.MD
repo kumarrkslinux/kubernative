@@ -3,12 +3,11 @@
 ### Master 
 ``` 
 curl -sfL https://get.k3s.io | sh -
-
+```
 ```
 ### client 
 curl -sfL https://get.k3s.io |K3S_URL=https://192.168.1.10:6443 K3S_TOKEN=K10817f8bf7c8f2f1bec2e81dccf81b6dd61a812d96e4af2c194140cbf06217e3ad::server:5bfba1c3694b64b8794d50df0d79cb90 sh -
-
-
+```
 [root@k8smaster ~]# kubectl get nodes
 NAME                       STATUS   ROLES                  AGE   VERSION
 worknode.k8s.com           Ready    <none>                 26m   v1.24.4+k3s1
