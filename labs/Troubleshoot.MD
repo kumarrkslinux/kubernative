@@ -112,3 +112,43 @@ root@controlplane /etc/kubernetes/manifests ✖ cat kube-controller-manager.yaml
 -rw------- 1 root root 5598 Sep 26 04:14 /etc/kubernetes/controller-manager.conf
 
 ``` 
+
+4. Something is wrong with scaling again. We just tried scaling the deployment to 3 replicas. But it's not happening.
+
+Investigate and fix the issue.
+
+```
+root@controlplane /etc/kubernetes/manifests ➜  kubectl get pods -A 
+NAMESPACE     NAME                                   READY   STATUS             RESTARTS   AGE
+default       app-586bddbc54-cwwcq                   1/1     Running            0          80s
+default       app-586bddbc54-t28gk                   1/1     Running            0          18m
+kube-system   coredns-74ff55c5b-6plz9                1/1     Running            0          56m
+kube-system   coredns-74ff55c5b-f5ppq                1/1     Running            0          56m
+kube-system   etcd-controlplane                      1/1     Running            0          56m
+kube-system   kube-apiserver-controlplane            1/1     Running            0          56m
+kube-system   kube-controller-manager-controlplane   0/1     CrashLoopBackOff   3          71s
+kube-system   kube-flannel-ds-zv9pr                  1/1     Running            0          56m
+kube-system   kube-proxy-2n468                       1/1     Running            0          56m
+kube-system   kube-scheduler-controlplane            1/1     Running            0          11m
+
+root@controlplane /etc/kubernetes/manifests ➜  kubectl logs kube-controller-manager-controlplane -n kube-system 
+Flag --port has been deprecated, see --secure-port instead.
+I0926 05:11:32.822458       1 serving.go:331] Generated self-signed cert in-memory
+unable to load client CA file "/etc/kubernetes/pki/ca.crt": open /etc/kubernetes/pki/ca.crt: no such file or directory
+
+root@controlplane /etc/kubernetes/manifests ➜  ll /etc/kubernetes/pki/ca.crt 
+-rw-r--r-- 1 root root 1066 Sep 26 04:14 /etc/kubernetes/pki/ca.crt
+
+root@controlplane /etc/kubernetes/manifests ➜  kubectl get pods -A 
+NAMESPACE     NAME                                   READY   STATUS    RESTARTS   AGE
+default       app-586bddbc54-cwwcq                   1/1     Running   0          5m2s
+default       app-586bddbc54-t28gk                   1/1     Running   0          22m
+kube-system   coredns-74ff55c5b-6plz9                1/1     Running   0          60m
+kube-system   coredns-74ff55c5b-f5ppq                1/1     Running   0          60m
+kube-system   etcd-controlplane                      1/1     Running   0          60m
+kube-system   kube-apiserver-controlplane            1/1     Running   0          60m
+kube-system   kube-controller-manager-controlplane   1/1     Running   0          79s
+kube-system   kube-flannel-ds-zv9pr                  1/1     Running   0          60m
+kube-system   kube-proxy-2n468                       1/1     Running   0          60m
+kube-system   kube-scheduler-controlplane            1/1     Running   0          14m
+```
