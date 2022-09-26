@@ -300,3 +300,28 @@ There appears to be a mistake path used for the CA certificate in the kubelet co
 Once this is fixed, restart the kubelet service, (like we did in the previous question) and node01 should return back to a working state.
 
 
+3. The cluster is broken again. Investigate and fix the issue.
+
+``` 
+
+root@node01 /etc/kubernetes/manifests ➜  journalctl -u kubelet.service -f |grep failed 
+
+Sep 26 05:53:02 node01 kubelet[11387]: E0926 05:53:02.366313   11387 controller.go:144] failed to ensure lease exists, will retry in 7s, error: Get "https://controlplane:6553/apis/coordination.k8s.io/v1/namespaces/kube-node-lease/leases/node01?timeout=10s": dial tcp 10.12.149.6:6553: connect: connection refused
+Sep 26 05:53:06 node01 kubelet[11387]: E0926 05:53:06.878189   11387 eviction_manager.go:254] "Eviction manager: failed to get summary stats" err="failed to get node info: node \"node01\" not found"
+Sep 26 05:53:09 node01 kubelet[11387]: E0926 05:53:09.368552   11387 controller.go:144] failed to ensure lease exists, will retry in 7s, error: Get "https://controlplane:6553/apis/coordination.k8s.io/v1/namespaces/kube-node-lease/leases/node01?timeout=10s": dial tcp 10.12.149.6:6553: connect: connection refused
+
+
+
+Once again the kubelet service has stopped working. Checking the logs, we can see that this time, it is not able to reach the kube-apiserver.
+
+root@node01:~# journalctl -u kubelet 
+.
+.
+Jul 25 08:05:26 node01 kubelet[7966]: E0725 08:05:26.426155    7966 reflector.go:138] k8s.io/kubernetes/pkg/kubelet/config/apiserver.go:46: Failed to watch *v1.Pod: failed to list *v1.Pod: Get "https://controlplane:6553/api/v1/pods?fieldSelector=spec.nodeName%3Dnode01&limit=500&resourceVersion=0": dial tcp 10.1.126.9:6553: connect: connection refused
+.
+.
+As we can clearly see, kubelet is trying to connect to the API server on the controlplane node on port 6553. This is incorrect.
+To fix, correct the port on the kubeconfig file used by the kubelet.
+
+root@node01 ~ ➜  grep control /etc/kubernetes/kubelet.conf
+    server: https://controlplane:6553    --- need to change 6443
