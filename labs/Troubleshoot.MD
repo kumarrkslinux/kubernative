@@ -323,4 +323,6 @@ To fix, correct the port on the kubeconfig file used by the kubelet.
 
 root@node01 ~ ➜  grep control /etc/kubernetes/kubelet.conf
     server: https://controlplane:6553    --- need to change 6443
+    
+service kubelet restart 
 ``` 
