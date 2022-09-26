@@ -298,7 +298,7 @@ Jul 25 07:55:01 node01 kubelet[5710]: F0725 07:55:01.339531    5710 server.go:25
 .
 There appears to be a mistake path used for the CA certificate in the kubelet configuration. This can be corrected by updating the file /var/lib/kubelet/config.yaml.  on worker nodes - /etc/kubernetes/pki/WRONG-CA-FILE.crt
 Once this is fixed, restart the kubelet service, (like we did in the previous question) and node01 should return back to a working state.
-
+``` 
 
 3. The cluster is broken again. Investigate and fix the issue.
 
