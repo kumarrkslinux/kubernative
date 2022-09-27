@@ -388,3 +388,46 @@ mysql                           1/1     Running   0          9m38s
 webapp-mysql-54db464f4f-jmw59   1/1     Running   0          9m37s
 
 ``` 
+
+2. #### **Troubleshooting Test 2:** The same 2 tier application is having issues again. It must display a green web page on success. Click on the app tab at      #### the top of your terminal to view your application. It is currently failed. Troubleshoot and fix the issue.
+
+#### Stick to the given architecture. Use the same names and port numbers as given in the below architecture diagram. Feel free to edit, delete or recreate objects as necessary.
+
+#### The kube-proxy pods are not running. As a result the rules needed to allow connectivity to the services have not been created.
+
+#### Check the logs of the kube-proxy pods kubectl -n kube-system logs <name_of_the_kube_proxy_pod>
+
+#### The configuration file /var/lib/kube-proxy/configuration.conf is not valid. The configuration path does not match the data in the ConfigMap. kubectl -n kube-system describe configmap kube-proxy shows that the file name used is config.conf which is mounted in the kube-proxy damonset pods at the path /var/lib/kube-proxy/config.conf
+
+#### However in the DaemonSet for kube-proxy, the command used to start the kube-proxy pod makes use of the path /var/lib/kube-proxy/configuration.conf.
+
+#### Correct this path to /var/lib/kube-proxy/config.conf as per the ConfigMap and recreate the kube-proxy pods.
+
+#### Here is the snippet of the command to be run by the kube-proxy pods:
+
+``` 
+
+root@controlplane:/# kubectl get pods -n kube-system 
+NAME                                   READY   STATUS             RESTARTS   AGE
+coredns-74ff55c5b-9jmfq                1/1     Running            0          58m
+coredns-74ff55c5b-kwpkv                1/1     Running            0          58m
+etcd-controlplane                      1/1     Running            0          58m
+kube-apiserver-controlplane            1/1     Running            0          58m
+kube-controller-manager-controlplane   1/1     Running            0          58m
+kube-proxy-mcczg                       0/1     CrashLoopBackOff   4          3m7s
+kube-scheduler-controlplane            1/1     Running            0          58m
+weave-net-2hcpt                        2/2     Running            0          4m48s
+root@controlplane:/# kubectl logs  kube-proxy-mcczg -n kube-system 
+F0927 04:40:04.132923       1 server.go:490] failed complete: open /var/lib/kube-proxy/configuration.conf: no such file or directory
+
+root@controlplane:/# kubectl -n kube-system edit ds kube-proxy
+daemonset.apps/kube-proxy edited
+
+spec:
+      containers:
+      - command:
+        - /usr/local/bin/kube-proxy
+        - --config=/var/lib/kube-proxy/config.conf  ====== This value has to be changed 
+        - --hostname-override=$(NODE_NAME)
+This should get the kube-proxy pods back in a running state.
+
