@@ -326,3 +326,65 @@ root@node01 ~ ➜  grep control /etc/kubernetes/kubelet.conf
     
 service kubelet restart 
 ``` 
+
+### NETWORK FALIURE
+
+##### **Troubleshooting Test 1:** A simple 2 tier application is deployed in the triton namespace. It must display a green web page on success. Click on the app tab at the top of your terminal to view your application. It is currently failed. Troubleshoot and fix the issue.
+
+##### Stick to the given architecture. Use the same names and port numbers as given in the below architecture diagram. Feel free to edit, delete or recreate objects as necessary.
+
+
+**DB Service working?
+**WebApp Service working?
+```
+root@controlplane:/# kubectl config set-context --current --namespace=triton
+Context "kubernetes-admin@kubernetes" modified.
+
+root@controlplane:/# kubectl get pods
+NAME                            READY   STATUS              RESTARTS   AGE
+mysql                           0/1     ContainerCreating   0          3m52s
+webapp-mysql-54db464f4f-jmw59   0/1     ContainerCreating   0          3m51s
+
+root@controlplane:/# kubectl get pods -n kube-system 
+NAME                                   READY   STATUS    RESTARTS   AGE
+coredns-74ff55c5b-9jmfq                1/1     Running   0          52m
+coredns-74ff55c5b-kwpkv                1/1     Running   0          52m
+etcd-controlplane                      1/1     Running   0          52m
+kube-apiserver-controlplane            1/1     Running   0          52m
+kube-controller-manager-controlplane   1/1     Running   0          52m
+kube-proxy-dxq24                       1/1     Running   0          52m
+kube-scheduler-controlplane            1/1     Running   0          52m
+
+root@controlplane:/# journalctl -f |grep failed
+Sep 27 04:32:16 controlplane kubelet[2986]: W0927 04:32:16.732456    2986 cni.go:333] CNI failed to retrieve network namespace path: cannot find network namespace for the terminated container "e9ea18037528d0046ef5f9a11317f62d5273c57990e3aa01b6327062d0227bab"
+Sep 27 04:32:16 controlplane kubelet[2986]: W0927 04:32:16.735065    2986 cni.go:333] CNI failed to retrieve network namespace path: cannot find network namespace for the terminated container "3d643919b4ee2a65eb7a766e62b7979e5c1397b3bb94ebc8528ba1bc49d1740e"
+Sep 27 04:32:16 controlplane kubelet[2986]: E0927 04:32:16.782727    2986 remote_runtime.go:143] StopPodSandbox "e9ea18037528d0046ef5f9a11317f62d5273c57990e3aa01b6327062d0227bab" from runtime service failed: rpc error: code = Unknown desc = networkPlugin cni failed to teardown pod "webapp-mysql-54db464f4f-jmw59_triton" network: Delete "http://127.0.0.1:6784/ip/e9ea18037528d0046ef5f9a11317f62d5273c57990e3aa01b6327062d0227bab": dial tcp 127.0.0.1:6784: connect: connection refused
+Sep 27 04:32:16 controlplane kubelet[2986]: E0927 04:32:16.782853    2986 kuberuntime_manager.go:702] killPodWithSyncResult failed: failed to "KillPodSandbox" for "0c70fb52-64f9-4ddf-92b0-69b7a9e2d637" with KillPodSandboxError: "rpc error: code = Unknown desc = networkPlugin cni failed to teardown pod \"webapp-mysql-54db464f4f-jmw59_triton\" network: Delete \"http://127.0.0.1:6784/ip/e9ea18037528d0046ef5f9a11317f62d5273c57990e3aa01b6327062d0227bab\": dial tcp 127.0.0.1:6784: connect: connection refused"
+Sep 27 04:32:16 controlplane kubelet[2986]: E0927 04:32:16.782873    2986 pod_workers.go:191] Error syncing pod 0c70fb52-64f9-4ddf-92b0-69b7a9e2d637 ("webapp-mysql-54db464f4f-jmw59_triton(0c70fb52-64f9-4ddf-92b0-69b7a9e2d637)"), skipping: failed to "KillPodSandbox" for "0c70fb52-64f9-4ddf-92b0-69b7a9e2d637" with KillPodSandboxError: "rpc error: code = Unknown desc = networkPlugin cni failed to teardown pod \"webapp-mysql-54db464f4f-jmw59_triton\" network: Delete \"http://127.0.0.1:6784/ip/e9ea18037528d0046ef5f9a11317f62d5273c57990e3aa01b6327062d0227bab\": dial tcp 127.0.0.1:6784: connect: connection refused"
+
+we dont see CNI plugins in kube-system name space. 
+
+root@controlplane:/# kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+serviceaccount/weave-net created
+clusterrole.rbac.authorization.k8s.io/weave-net created
+clusterrolebinding.rbac.authorization.k8s.io/weave-net created
+role.rbac.authorization.k8s.io/weave-net created
+rolebinding.rbac.authorization.k8s.io/weave-net created
+daemonset.apps/weave-net created
+
+root@controlplane:/# kubectl get pods -n kube-system NAME                                   READY   STATUS    RESTARTS   AGE
+coredns-74ff55c5b-9jmfq                1/1     Running   0          54m
+coredns-74ff55c5b-kwpkv                1/1     Running   0          54m
+etcd-controlplane                      1/1     Running   0          54m
+kube-apiserver-controlplane            1/1     Running   0          54m
+kube-controller-manager-controlplane   1/1     Running   0          54m
+kube-proxy-dxq24                       1/1     Running   0          54m
+kube-scheduler-controlplane            1/1     Running   0          54m
+weave-net-2hcpt                        2/2     Running   0          25s  --- newly installed 
+
+root@controlplane:/# kubectl get pods
+NAME                            READY   STATUS    RESTARTS   AGE
+mysql                           1/1     Running   0          9m38s
+webapp-mysql-54db464f4f-jmw59   1/1     Running   0          9m37s
+
+``` 
