@@ -44,3 +44,10 @@ $.*.prize
 $[*].model  -- All item in the list 
 $.*.wheels[*].model
 
+List: 
+$[0:3]  [START:END]
+$[0:8:2] [START:END:STEP]
+$[-1:0] Last item in the list
+$[-1:]
+$[-3:]
+
