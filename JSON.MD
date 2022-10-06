@@ -28,3 +28,19 @@ $kubectl get nodes --sort-by=.metadata.name
 
 
 $kubectl get nodes --sort-by=.status.capacity.cpu
+
+How to get more than 40 : 
+$[?( @ > 40 )]  -- @ means each iteam in the list / check if ?
+
+$.car.wheels[?(@.location == "rear-wheel")].model
+equal to 40
+@ == 40 
+Not equal to 40
+@ != 40 
+
+While card: 
+$.*.color 
+$.*.prize
+$[*].model  -- All item in the list 
+$.*.wheels[*].model
+
