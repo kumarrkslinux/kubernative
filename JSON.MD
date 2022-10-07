@@ -16,7 +16,7 @@ master node01
 4        4 
 
 Loop 
-$ kubectl get nodes -o=jsonpath='{range.items[*]}{.metatdata.name} {"\t"} {.status.capacity.cpu}{"\n"}{end}'
+$ kubectl get nodes -o=jsonpath='{range.items[*]}{.metatdata.name} {"\t"} {.status.capacity.cpu}{"\n"}{end}'  -->  $ is not required for kubectl 
 
 
 $kubectl get nodes -o=custom-cloumns=NODE:.metatdata.name,CPU:.status.capacity.cpu
