@@ -51,3 +51,11 @@ $[-1:0] Last item in the list
 $[-1:]
 $[-3:]
 
+practice-test-advanced-kubectl-commands:
+
+kubectl get nodes  -o json > /opt/outputs/nodes.json
+kubectl get node node01  -o json > /opt/outputs/node01.json
+kubectl get nodes  -o jsonpath='{.items[*].metadata.name}' > /opt/outputs/node_names.txt
+kubectl get nodes  -o jsonpath='{.items[*].status.nodeInfo.osImage}' > /opt/outputs/nodes_os.txt
+
+
