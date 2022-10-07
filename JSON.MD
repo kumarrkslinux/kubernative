@@ -98,4 +98,7 @@ The columns should be named NAME and CAPACITY. Use the custom-columns option and
 controlplane ~ ➜  kubectl get pv --sort-by=.spec.capacity.storage -o=custom-columns=NAME:.metadata.name,CAPACITY:.spec.capacity.storage > /opt/outputs/pv-and-capacity-sorted.txt
 
 3. Use a JSON PATH query to identify the context configured for the aws-user in the my-kube-config context file and store the result in /opt/outputs/aws-context-name
+controlplane ~ ➜  kubectl config view --kubeconfig=/root/my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" 
+aws-user@kubernetes-on-aw
+controlplane ~ ➜  kubectl config view --kubeconfig=/root/my-kube-config -o jsonpath="{.contexts[?(@.context.user=='aws-user')].name}" > /opt/outputs/aws-context-name
 
