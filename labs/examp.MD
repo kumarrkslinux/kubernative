@@ -435,3 +435,68 @@ W1011 05:15:30.123021    9270 initconfiguration.go:120] Usage of CRI endpoints w
 [upgrade/successful] SUCCESS! Your cluster was upgraded to "v1.24.0". Enjoy!
 
 [upgrade/kubelet] Now that your control plane is upgraded, please proceed with upgrading your kubelets if you haven't already done so.
+
+controlplane ~ ✖ kubectl get nodes
+NAME           STATUS   ROLES           AGE   VERSION
+controlplane   Ready    control-plane   14m   v1.23.0
+node01         Ready    <none>          14m   v1.23.0
+
+#### It wil Still pointing to older version because what we seehere is version of kubelet and kubeadm upgrade command does not upgrade kubelet. 
+
+controlplane ~ ✖ kubectl drain controlplane --ignore-daemonsets
+node/controlplane already cordoned
+WARNING: ignoring DaemonSet-managed Pods: kube-system/kube-proxy-kxffv, kube-system/weave-net-h48tg
+evicting pod kube-system/coredns-6d4b75cb6d-txfbl
+evicting pod kube-system/coredns-6d4b75cb6d-bp5ns
+pod/coredns-6d4b75cb6d-bp5ns evicted
+pod/coredns-6d4b75cb6d-txfbl evicted
+node/controlplane drained
+
+controlplane ~ ➜  apt-mark unhold kubelet kubectl
+Canceled hold on kubelet.
+Canceled hold on kubectl.
+
+
+controlplane ~ ➜  apt-get update 
+Hit:1 https://packages.cloud.google.com/apt kubernetes-xenial InRelease                   
+Hit:2 https://download.docker.com/linux/ubuntu bionic InRelease                                                                       
+Hit:3 http://security.ubuntu.com/ubuntu bionic-security InRelease                                                                     
+Hit:4 http://archive.ubuntu.com/ubuntu bionic InRelease                                                              
+Hit:5 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:6 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+
+controlplane ~ ✖ apt-get install -y kubelet=1.24.0-00  kubectl=1.24.0-00
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following packages will be upgraded:
+  kubelet
+1 upgraded, 0 newly installed, 0 to remove and 30 not upgraded.
+Need to get 19.2 MB of archives.
+After this operation, 8,159 kB disk space will be freed.
+Get:1 https://packages.cloud.google.com/apt kubernetes-xenial/main amd64 kubelet amd64 1.24.0-00 [19.2 MB]
+Fetched 19.2 MB in 0s (63.0 MB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+(Reading database ... 15453 files and directories currently installed.)
+Preparing to unpack .../kubelet_1.24.0-00_amd64.deb ...
+/usr/sbin/policy-rc.d returned 101, not running 'stop kubelet.service'
+Unpacking kubelet (1.24.0-00) over (1.23.0-00) ...
+Setting up kubelet (1.24.0-00) ...
+/usr/sbin/policy-rc.d returned 101, not running 'start kubelet.service'
+
+controlplane ~ ➜  systemctl start kubelet.service 
+
+controlplane ~ ➜  apt-get install -y kubelet=1.24.0-00  kubectl=1.24.0-00
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+kubelet is already the newest version (1.24.0-00).
+0 upgraded, 0 newly installed, 0 to remove and 30 not upgraded.
+
+controlplane ~ ➜  apt-mark hold kubelet kubectl
+kubelet set on hold.
+kubectl set on hold.
+
+
+controlplane ~ ➜  systemctl daemon-reload 
