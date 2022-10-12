@@ -305,7 +305,7 @@ controlplane ~ ➜  apt-cache madison kubeadm
    kubeadm |   1.6.1-00 | http://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
    kubeadm |   1.5.7-00 | http://apt.kubernetes.io kubernetes-xenial/main amd64 Packages
 
-controlplane ~ ➜   apt-mark unhold kubeadm
+controlplane ~ ➜  apt-mark unhold kubeadm
 Canceled hold on kubeadm.
   
 controlplane ~ ➜  apt-get update && apt-get install -y kubeadm=1.24.0-00
@@ -494,9 +494,16 @@ Reading state information... Done
 kubelet is already the newest version (1.24.0-00).
 0 upgraded, 0 newly installed, 0 to remove and 30 not upgraded.
 
-controlplane ~ ➜  apt-mark hold kubelet kubectl
-kubelet set on hold.
-kubectl set on hold.
+controlplane ~ ➜  sudo systemctl daemon-reload 
+controlplane ~ ➜  sudo systemctl restart kubelet.service 
 
+controlplane ~ ➜  kubectl get nodes
+The connection to the server controlplane:6443 was refused - did you specify the right host or port?
 
-controlplane ~ ➜  systemctl daemon-reload 
+controlplane ~ ✖ kubectl uncordon controlplane 
+node/controlplane uncordoned
+
+controlplane ~ ➜  kubectl get nodes
+NAME           STATUS   ROLES           AGE   VERSION
+controlplane   Ready    control-plane   21m   v1.24.0
+node01         Ready    <none>          21m   v1.23.0
