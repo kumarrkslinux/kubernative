@@ -7,9 +7,9 @@ weight 15
 
 #### pods 'gold-nginx' running on controlplane?
 
-Here is the solution for this task. Please note that the output of these commands have not been added here.
+### Here is the solution for this task. Please note that the output of these commands have not been added here.
 
-
+``` 
 On the controlplane node:
 
 root@controlplane:~# kubectl drain controlplane --ignore-daemonsets
@@ -50,7 +50,7 @@ Back on the controlplane node:
 
 root@controlplane:~# kubectl uncordon node01
 root@controlplane:~# kubectl get pods -o wide | grep gold (make sure this is scheduled on
-
+``` 
 ##### on controle plan :
 ``` 
 controlplane ~ ➜  kubectl get nodes
