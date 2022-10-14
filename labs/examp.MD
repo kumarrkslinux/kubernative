@@ -27,7 +27,7 @@ Before draining node01, we need to remove the taint from the controlplane node.
 root@controlplane:~# kubectl describe node controlplane | grep -i taint
 
 # Remove the taint with help of "kubectl taint" command.
-root@controlplane:~# kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule
+root@controlplane:~# kubectl taint node controlplane node-role.kubernetes.io/control-plane:NoSchedule-
 
 # Verify it, the taint has been removed successfully.  
 root@controlplane:~# kubectl describe node controlplane | grep -i taint
