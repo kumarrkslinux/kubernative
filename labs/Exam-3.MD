@@ -188,3 +188,17 @@ status:
     type: PodScheduled
   phase: Pending
   qosClass: BestEffort
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-alpha-pvc
+  namespace: alpha
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: slow
