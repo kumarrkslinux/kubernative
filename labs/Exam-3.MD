@@ -94,3 +94,97 @@ alpha-pv   1Gi        RWO            Retain           Available           slow  
 controlplane ~ ➜  kubectl get pvc -n alpha 
 NAME          STATUS    VOLUME   CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 alpha-claim   Pending                                      slow-storage   31m
+
+controlplane ~ ✖ kubectl get pod alpha-mysql-56bdcdf8f7-zbp7h -n alpha -o yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2022-10-18T04:40:59Z"
+  generateName: alpha-mysql-56bdcdf8f7-
+  labels:
+    app: alpha-mysql
+    pod-template-hash: 56bdcdf8f7
+  name: alpha-mysql-56bdcdf8f7-zbp7h
+  namespace: alpha
+  ownerReferences:
+  - apiVersion: apps/v1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: alpha-mysql-56bdcdf8f7
+    uid: e4943785-3aa9-4570-b2d4-4bb93a0a981d
+  resourceVersion: "2171"
+  uid: 240c2f55-685e-4c9c-81fb-8ddd73a4a0a6
+spec:
+  containers:
+  - env:
+    - name: MYSQL_ALLOW_EMPTY_PASSWORD
+      value: "1"
+    image: mysql:5.6
+    imagePullPolicy: Always
+    name: mysql
+    ports:
+    - containerPort: 3306
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/lib/mysql
+      name: mysql-data
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: kube-api-access-q4qwd
+      readOnly: true
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: mysql-data
+    persistentVolumeClaim:
+      claimName: mysql-alpha-pvc
+  - name: kube-api-access-q4qwd
+    projected:
+      defaultMode: 420
+      sources:
+      - serviceAccountToken:
+          expirationSeconds: 3607
+          path: token
+      - configMap:
+          items:
+          - key: ca.crt
+            path: ca.crt
+          name: kube-root-ca.crt
+      - downwardAPI:
+          items:
+          - fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+            path: namespace
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-10-18T04:40:59Z"
+    message: '0/2 nodes are available: 2 persistentvolumeclaim "mysql-alpha-pvc" not
+      found. preemption: 0/2 nodes are available: 2 Preemption is not helpful for
+      scheduling.'
+    reason: Unschedulable
+    status: "False"
+    type: PodScheduled
+  phase: Pending
+  qosClass: BestEffort
