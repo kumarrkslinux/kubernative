@@ -22,3 +22,6 @@ nginx-deploy-7cfd4975d6-q9b57   1/1     Running   0          19s
 
 controlplane ~/CKA ➜  kubectl set image deployment/nginx-deploy nginx=nginx:1.17 --record
 kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+
+controlplane ~ ✖ kubectl rollout status deployment/nginx-deploy 
+deployment "nginx-deploy" successfully rolled out
