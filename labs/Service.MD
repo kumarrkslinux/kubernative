@@ -1,4 +1,6 @@
-https://github.com/kumarrkslinux/kubernetes/blob/main/Capture.JPG 
+ 
+
+
 ```sh
 What is the type of the default kubernetes service?
 ClusterIP
@@ -59,3 +61,5 @@ spec:
       nodePort: 30080
   selector:
     name: simple-webapp
+
+![ScreenShot]([https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG]
