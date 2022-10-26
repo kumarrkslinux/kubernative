@@ -62,5 +62,4 @@ spec:
   selector:
     name: simple-webapp
 ``` 
-
-![ScreenShot]([https://github.com/kumarrkslinux/kubernetes/blob/main/Capture.JPG]
+![ScreenShot]([https://github.com/kumarrkslinux/kubernetes/blob/main/Capture.JPG])
