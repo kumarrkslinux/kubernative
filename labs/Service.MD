@@ -63,4 +63,4 @@ spec:
     name: simple-webapp
 ``` 
 
-![ScreenShot]([https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG]
+![ScreenShot]([https://github.com/kumarrkslinux/kubernetes/blob/main/Capture.JPG]
