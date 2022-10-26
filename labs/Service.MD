@@ -1,3 +1,4 @@
+https://github.com/kumarrkslinux/kubernetes/blob/main/Capture.JPG 
 ```sh
 What is the type of the default kubernetes service?
 ClusterIP
