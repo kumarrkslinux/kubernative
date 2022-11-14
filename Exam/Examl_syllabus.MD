@@ -7,7 +7,7 @@
 - Storage
 - Troubleshooting
 
-
+-----------------------------------------------------------------------------
 - Cluster Architecture, Installation & Configuration	25%
 - Workloads & Scheduling	15% 
 - Services & Networking	20% 
