@@ -1,11 +1,19 @@
-### Certified Kubernetes Administrator Exam Modules
-### There are five modules in the exam:
+#### Certified Kubernetes Administrator Exam Modules
+#### There are five modules in the exam:
 
 - Cluster Architecture, Installation, and Configuration
 - Workloads and Scheduling
 - Services and Networking
 - Storage
 - Troubleshooting
+
+#### The CKA exam is an open-book exam. You have access to the below resources:
+
+https://kubernetes.io/docs/
+https://github.com/kubernetes
+https://kubernetes.io/blog/
+
+#### The CKA certification is valid for three years.
 
 -----------------------------------------------------------------------------
 - Cluster Architecture, Installation & Configuration	25%
