@@ -9,9 +9,9 @@
 
 #### The CKA exam is an open-book exam. You have access to the below resources:
 
-[x] https://kubernetes.io/docs/
-[x] https://github.com/kubernetes
-[x] https://kubernetes.io/blog/
+- https://kubernetes.io/docs/
+- https://github.com/kubernetes
+- https://kubernetes.io/blog/
 
 #### The CKA certification is valid for three years.
 
