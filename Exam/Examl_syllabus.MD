@@ -63,7 +63,7 @@ Workloads & Scheduling15%
   - Understand how resource limits can affect Pod scheduling
   - Awareness of manifest management and common templating tools
    
-   #### Workloads & Scheduling 15%
+ - Workloads & Scheduling 15%
    - POD
       - Single container and multi container with respective images
       - Architecture of kubernetes components 
@@ -86,7 +86,7 @@ Workloads & Scheduling15%
    - Taints and toleration 
      - Taints are used to repel the pods from a specific nodes
      - In order to enter the tain worker node, we need a pass, this is referred as Toleration(Noshedule/Noexecute)
-     -  List out number of nodes, which has tained of Noshedule 
+     - List out number of nodes, which has tained of Noshedule 
 
 
 Cluster Architecture, Installation & Configuration25%
