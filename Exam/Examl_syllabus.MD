@@ -1,4 +1,11 @@
+
+
 #### Certified Kubernetes Administrator Exam Modules
+
+
+![ScreenShot](https://github.com/kumarrkslinux/kubernative/blob/main/Architecture%20with%20Diagrams.PNG)
+
+
 #### There are five modules in the exam:
 
 - Cluster Architecture, Installation, and Configuration
