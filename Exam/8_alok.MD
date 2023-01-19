@@ -12,6 +12,7 @@
    Mostly issue on contoller-manager(kubectl describe) in kube-system namespace and thats static pod in cluster 
    
 5 . Upgrade the cluster(mater and worker) from 1.22.6 to 1.23.0 Make sure first drain the first master node and second node.
+    
     - kubeadm upgrade apply v1.25.0 --etcd-upgrade=false 
     - kubectl drain masternode --ignore-daemonsets --delete-local-data --force or --deleted-empty-dir-data=true
 
