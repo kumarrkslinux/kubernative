@@ -17,7 +17,9 @@
 
 7. Create static pod called static-pod01 on node01 with image nginx and we have to make sure that it recreate/restarted automatically in case of any faliure  happen. 
 You have to run the command to identify where we need keep the staic pod in node01
-  1. ps -ef |grep kubelet      
-  2. get the out from previous command --config=/var/lib/kubelet/config.yml  
-  3. cat /var/lib/kubelet/config.yml |grep static
-
+   - ps -ef |grep kubelet
+   - get the out from previous command --config=/var/lib/kubelet/config.yml  
+   - cat /var/lib/kubelet/config.yml |grep static
+8.  Create pod called multpod with two container describtion mention below 
+    - container 1: name: conatainer1, image: nginx 
+    - container 2: name: conatainer2, image: busybox and sleep 4800 
