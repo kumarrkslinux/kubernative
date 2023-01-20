@@ -28,3 +28,9 @@ You have to run the command to identify where we need keep the staic pod in node
     - container 2: name: conatainer2, image: busybox and sleep 4800 
 
 9. Create pod called delta-pod in defence name space belongs to development environment (env=dev) and front tier(tier=front) and image=nginx:1.17
+
+10. Get node01 in json format store it in a file at /opt/output/node0112345.txt
+
+11. Take backup of ETCD database backup and save it in the /opt/output/etcdbackp.db
+
+
