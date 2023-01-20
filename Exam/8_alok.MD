@@ -42,3 +42,9 @@ You have to run the command to identify where we need keep the staic pod in node
       
        - user the image busynox:1.28 for dns lookup 
        - save the result service dns lookup in /root/web-po-svc.txt and save pod lookup in webpod.txt
+
+Solution: 
+    
+     - kubectl exec -it testpod -- nslookup webpod-svc.default.pod.cluster.local 
+     - kubectl exec -it testpod -- nslookup 192-168-1-22.default.pod.cluster.local 
+   
