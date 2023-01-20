@@ -33,6 +33,12 @@ You have to run the command to identify where we need keep the staic pod in node
 
 11. Take backup of ETCD database backup and save it in the /opt/output/etcdbackp.db
 
-    - If its service kubectl -n kube-system get pods etcd-pod-kjhdf92 ; kubectl -n kube-system describe pod etcd-pod-kjhdf92  
+    - If etcd as service kubectl -n kube-system get pods etcd-pod-kjhdf92 ; kubectl -n kube-system describe pod etcd-pod-kjhdf92  
+12. A new applciation has finance pod is deployed in finance name space and there is some issue in the container. 
+    
+      - Sleep name wrong in the container need to take as -o yaml file and replace with kubectl command. 
 
-
+13. Create a pod called web-pod using nginx image, expose it internally with service name called web-pod-svc, Check are you able to look up the service and pod from within cluster
+      
+       - user the image busynox:1.28 for dns lookup 
+       - save the result service dns lookup in /root/web-po-svc.txt and save pod lookup in webpod.txt
