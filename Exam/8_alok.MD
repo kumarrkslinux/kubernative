@@ -26,3 +26,5 @@ You have to run the command to identify where we need keep the staic pod in node
 8.  Create pod called multpod with two container describtion mention below 
     - container 1: name: conatainer1, image: nginx 
     - container 2: name: conatainer2, image: busybox and sleep 4800 
+
+9. Create pod called delta-pod in defence name space belongs to development environment (env=dev) and front tier(tier=front) and image=nginx:1.17
