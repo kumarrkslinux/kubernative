@@ -33,4 +33,6 @@ You have to run the command to identify where we need keep the staic pod in node
 
 11. Take backup of ETCD database backup and save it in the /opt/output/etcdbackp.db
 
+    - If its service kubectl -n kube-system get pods etcd-pod-kjhdf92 ; kubectl -n kube-system describe pod etcd-pod-kjhdf92  
+
 
