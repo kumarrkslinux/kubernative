@@ -78,11 +78,11 @@ Solution:
 
 22. Create pv,pvc and pid with below specification 
     
-    Pv:                         Pvc                            POD
-    Volume name: my vaolume     Volume name: pvc-claim-log.    Name: My-nginx-pod
-    storage: 100Mi              Storage: 50Mi                  Image Name: nginx
-    access mode: ReadWriteMany.  Access mode: ReadWriteMany.   Volume: PersistenVolumeClaim=pvc-claim-log
-    Host Path: /pv/log                                         VolumeMount: /log
-    Reclaim policy: Retain  
+    - Pv:                         - Pvc                            POD
+      - Volume name: my vaolume     - Volume name: pvc-claim-log.    - Name: My-nginx-pod
+      - storage: 100Mi              - Storage: 50Mi                  - Image Name: nginx
+      - access mode: ReadWriteMany  - Access mode: ReadWriteMany.    - Volume: PersistenVolumeClaim=pvc-claim-log
+      - Host Path: /pv/log                                           - VolumeMount: /log
+      - Reclaim policy: Retain  
 
 
