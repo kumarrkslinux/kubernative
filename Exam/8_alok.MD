@@ -68,7 +68,7 @@ Solution:
       you will get whoami: unknown uid 1000 
       command terminator with exit code 1 and the pod can be communicate as above configuration
           
- 18. Workker node node01 is not reponding Have a quick fix.   Kubelet service on wroker need to be validated 
+ 18. Workker node node01 is not reponding Have a quick fix.   Kubelet service on wroker need to be validated on node01
 
  19. List the InternallIIP  of the all the nodes of the cluster and save the result to a file /root/InternallIPList.txt
  
@@ -84,5 +84,5 @@ Solution:
       - access mode: ReadWriteMany  - Access mode: ReadWriteMany.    - Volume: PersistenVolumeClaim=pvc-claim-log
       - Host Path: /pv/log                                           - VolumeMount: /log
       - Reclaim policy: Retain  
-
+23. Workker node node01 is not reponding Have a quick fix.  From The static kubelet configration and found that there is certificate file is missing with WRONG NAME, we need to neviagte to /var/lib/kubelet/config.yaml and change actual certname in the file.  systemctl daemon-reload and restarted the kubelet
 
