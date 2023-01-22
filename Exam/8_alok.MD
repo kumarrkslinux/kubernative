@@ -86,3 +86,8 @@ Solution:
       - Reclaim policy: Retain  
 23. Workker node node01 is not reponding Have a quick fix.  From The static kubelet configration and found that there is certificate file is missing with WRONG NAME, we need to neviagte to /var/lib/kubelet/config.yaml and change actual certname in the file.  systemctl daemon-reload and restarted the kubelet
 
+24. A pod is on custom namespace is not running. Find the problem and fix it and make it running. 
+    Definition file mention in the root. 
+    
+    - kubectl describe pod my-nginx-pod and found the pvc claim name is missing. 
+    - Find its running right namespace and pvc created on that and claim that.. Surely check on the space we should have pv already created. 
