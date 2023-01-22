@@ -71,4 +71,18 @@ Solution:
  18. Workker node node01 is not reponding Have a quick fix.   Kubelet service on wroker need to be validated 
 
  19. List the InternallIIP  of the all the nodes of the cluster and save the result to a file /root/InternallIPList.txt
- 2
+ 
+ 20. One static pod is riunning on controlpanel node and move the static pod to run on node01.. Dont need to do any other changes 
+
+ 21. A new user named guru need to be created, Grant him access to access the cluster. User guru to have access to create,list,get,update and delete the pod in the space in the namespace.. Private key exsits in the location ... /root/guru.key and /root/guru.csr
+
+22. Create pv,pvc and pid with below specification 
+    
+    Pv:                         Pvc                            POD
+    Volume name: my vaolume     Volume name: pvc-claim-log.    Name: My-nginx-pod
+    storage: 100Mi              Storage: 50Mi                  Image Name: nginx
+    access mode: ReadWriteMany.  Access mode: ReadWriteMany.   Volume: PersistenVolumeClaim=pvc-claim-log
+    Host Path: /pv/log                                         VolumeMount: /log
+    Reclaim policy: Retain  
+
+
