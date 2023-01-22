@@ -59,4 +59,8 @@ Solution:
      - Create another pod called prod-pod-nginx using using nginx with toleration toleration to be shedule on node01. 
      - Detail:
         - Key: env_type, Vaule: production, operator: equal and Effect: NoShedule
-     - 
+ 17. Create pod called Pod-xnhj123 detail given below
+   
+        - SecuirtyContext: runAsUser: 1000, fsGroup: : 2000 
+        - Image : redis/alpine  
+          
