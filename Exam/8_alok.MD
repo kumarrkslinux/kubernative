@@ -62,5 +62,13 @@ Solution:
  17. Create pod called Pod-xnhj123 detail given below
    
         - SecuirtyContext: runAsUser: 1000, fsGroup: : 2000 
-        - Image : redis/alpine  
+        - Image : redis/alpine   
+
+    - Validation: kubectl exec pod-xhbx123 -it -- whoamit
+      you will get whoami: unknown uid 1000 
+      command terminator with exit code 1 and the pod can be communicate as above configuration
           
+ 18. Workker node node01 is not reponding Have a quick fix.   Kubelet service on wroker need to be validated 
+
+ 19. List the InternallIIP  of the all the nodes of the cluster and save the result to a file /root/InternallIPList.txt
+ 2
