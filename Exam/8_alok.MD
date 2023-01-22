@@ -50,3 +50,13 @@ Solution:
  14. Create persisten Volume with given specification 
  
      - Volume name: pv-data / Storage Size: 100Mi / Access mode : ReadWriteMany /Host Path: /host/pv-data
+
+15. Expose the audit-pod as a service audit-web-service application on port 300002 on the node on the cluster Note: The application listen on port 8080  
+
+16. Taint the worker node  node01 with detail provided here.  
+
+     - Create the pod called   dev-pod-nginx using image as Nginx, make sure that workloads are not shedule to this Workernode Node01. 
+     - Create another pod called prod-pod-nginx using using nginx with toleration toleration to be shedule on node01. 
+     - Detail:
+        - Key: env_type, Vaule: production, operator: equal and Effect: NoShedule
+     - 
