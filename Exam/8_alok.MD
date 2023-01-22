@@ -47,4 +47,6 @@ Solution:
     
      - kubectl exec -it testpod -- nslookup webpod-svc.default.pod.cluster.local 
      - kubectl exec -it testpod -- nslookup 192-168-1-22.default.pod.cluster.local 
-   
+ 14. Create persisten Volume with given specification 
+ 
+     - Volume name: pv-data / Storage Size: 100Mi / Access mode : ReadWriteMany /Host Path: /host/pv-data
