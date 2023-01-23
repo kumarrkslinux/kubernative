@@ -128,3 +128,4 @@ spec:
       - image: nginx
         name: nginx
 ```
+29. There are 3 node in the cluster, create DaemonSet(Name: my-pod, Image: nginx) on each node except one(Worker 3)
