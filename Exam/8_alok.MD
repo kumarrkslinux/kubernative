@@ -91,3 +91,18 @@ Solution:
     
     - kubectl describe pod my-nginx-pod and found the pvc claim name is missing. 
     - Find its running right namespace and pvc created on that and claim that.. Surely check on the space we should have pv already created. 
+25. Create multi container pod in development namespace and use the nginx and redis image  
+26. A pod(nginx-pod) is on default namespace is not running. Find the problem and fix it and make it running.
+
+   - kubectl describe pod nginx-pod 
+   - Seems like taint on the node01 while is not allowing to sdhedule 
+   - add the toleration on the pod and replace command and recreate it. 
+
+27. Create the deployment called nginx-deploy with image nginx:1.16 and 2 replicas. There are 5 worker node in the cluster. Please make sure that no pod is deployed on below worker node. 
+        - woker01 and worker02
+        - kubectl cordon worker01 and kubectl cordon worker02 which help to not reploy any deployment on this node. 
+        - kubectl create deployment nginx-reploy --image=nginx --replicas=5
+
+28. Create a replicaset (Name: web-pod, Image: nginx:1.17, replicas: 3. Pod is already running on the cluster. 
+
+if you are using exsits pod the we can use same lable and selector while creating replication 
