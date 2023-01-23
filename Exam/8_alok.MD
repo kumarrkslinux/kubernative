@@ -106,3 +106,25 @@ Solution:
 28. Create a replicaset (Name: web-pod, Image: nginx:1.17, replicas: 3. Pod is already running on the cluster. 
 
 if you are using exsits pod the we can use same lable and selector while creating replication 
+
+```
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  labels:
+    app: kumar
+  name: we-pod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kumar
+  template:
+    metadata:
+      labels:
+        app: kumar
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+```
