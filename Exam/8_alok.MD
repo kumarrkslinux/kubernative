@@ -132,3 +132,11 @@ spec:
         
      - kubectl taint node worker03 env=qa:NoSchedule (then on this node daemon set will not be deployed)
      - After reployment check, kubectl get daemonsets -o wide 
+30. Create a pod "front-end-helper" that write "binaries downloaded successfully" into file "front-end-heleper-log.txt" abd then exists. Check, Pod"front-end-helper" should be deleyed automatically when its completed" 
+```
+# kubectl run front-end-helper --image=busybox -it --rm --restart=Never -- /bin/sh -c 'echo binaries downloaded successfully' > /tmp/front-end-pod.txt
+# cat /tmp/front-end-pod.txt 
+binaries downloaded successfully
+pod "front-end-helper" deleted
+```
+   - 
