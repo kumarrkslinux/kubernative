@@ -118,6 +118,8 @@ spec:
 
 # kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
+# kubectl -n kube-system get pods
+
 # [root@master ~]# kubectl top nodes
 NAME     CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
 master   405m         25%    3017Mi          94%       
