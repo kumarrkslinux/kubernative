@@ -143,4 +143,6 @@ web-hook-84897f6f7c-js8m7      0m           2Mi
 web-projec01-fb76d5cdd-44xhl   0m           3Mi             
 ``
 
+7. Check how the master compoenets , kubelet,kube-apiserver,kube-scheduler,kuber-controller-manager and etcd are started/installed on the master ndoe and also find out the name of the DNS application how it started/installed on the master node.  [staticpod/Not installed/process/pod]
 
+kubectl get pods -n kuber-system 
