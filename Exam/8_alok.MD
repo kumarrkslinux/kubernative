@@ -140,3 +140,25 @@ binaries downloaded successfully
 pod "front-end-helper" deleted
 ```
    - 
+30. Check How many nodes are in ready state and write the information about nodes tained with "NoSchedule" into file CKA0006.txt. At least one node's taint information should be logged in a file with below format. 
+
+   {Name""<<Node_value>>", "taints:<<Value>>}
+   Name""<<Node_value>>", "taints:<<Value>>}
+```
+   - Kubectl taint node master cpu=high:NoSchedule 
+   - kubectl get nodes -o custom-columns=NAME:.metadata.name,taints:.spec.taints - I dont but actually
+   - [root@master ~]# kubectl get nodes -o json |jq ".items[]| {name: .metadata.name, taints:.spec.taints}"
+{
+  "name": "master",
+  "taints": [
+    {
+      "effect": "NoSchedule",
+      "key": "node-role.kubernetes.io/master"
+    }
+  ]
+}
+{
+  "name": "node1",
+  "taints": null
+}
+```
