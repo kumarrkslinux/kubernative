@@ -109,5 +109,36 @@ spec:
           claimName: safari-pvc
 ```
 
+6. The metrix server has not been installed yet in the cluster but its something that should be done soon, You colleage would alreay like to know the kubectl command to 
+   
+      - show nodes resource usage 
+      - Show pods and their container resource usuage 
+
+```
+
+# kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
+# [root@master ~]# kubectl top nodes
+NAME     CPU(cores)   CPU%   MEMORY(bytes)   MEMORY%   
+master   405m         25%    3017Mi          94%       
+node1    286m         17%    2271Mi          97%       
+[root@master ~]# kubectl top pods
+NAME                           CPU(cores)   MEMORY(bytes)   
+audit-web-app                  0m           2Mi             
+dev-pod-nginx                  0m           2Mi             
+my-nginx-pod                   0m           2Mi             
+pod-xfyub123                   3m           10Mi            
+pod1                           1m           5Mi             
+prod-pod-nginx                 0m           2Mi             
+staic-pod-01-master            0m           6Mi             
+testbod                        0m           0Mi             
+we-pod                         0m           2Mi             
+we-pod-fsbb9                   0m           2Mi             
+we-pod-n2985                   0m           2Mi             
+web-hook-84897f6f7c-5v6d8      0m           7Mi             
+web-hook-84897f6f7c-7xv84      0m           2Mi             
+web-hook-84897f6f7c-js8m7      0m           2Mi             
+web-projec01-fb76d5cdd-44xhl   0m           3Mi             
+``
 
 
