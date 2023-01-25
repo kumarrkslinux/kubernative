@@ -165,4 +165,26 @@ spec:
     name: manualschedule-pod
 
 
-9. 
+9. Create a new ServiceAccount processor in Namespace project-hamster. Create a Role and Rolebinding, the both named processor as well. These should allow the new SA to only create Screts and ConfigMaos in that Namespace. 
+
+[root@master manifests]# kubectl create namespace project-hamaster
+namespace/project-hamaster created
+
+[root@master manifests]# kubectl create serviceaccount processor
+serviceaccount/processor created
+
+[root@master manifests]# kubectl create role processor --verb=create --resource=secrets,configmaps -n project-hamaster 
+role.rbac.authorization.k8s.io/processor created
+
+[root@master manifests]# kubectl create rolebinding processor --role=processor --serviceaccount=project-hamaster:processor -n project-hamaster 
+rolebinding.rbac.authorization.k8s.io/processor created
+
+[root@master manifests]# kubectl auth can-i create secrets --as system:serviceaccount:project-hamaster:processor  -n project-hamaster
+yes
+[root@master manifests]# kubectl auth can-i create configmaps --as system:serviceaccount:project-hamaster:processor  -n project-hamaster
+yes
+[root@master manifests]# kubectl auth can-i list configmaps --as system:serviceaccount:project-hamaster:processor  -n project-hamaster
+no
+[root@master manifests]# kubectl auth can-i list secrets --as system:serviceaccount:project-hamaster:processor  -n project-hamaster
+no
+
