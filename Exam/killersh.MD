@@ -245,3 +245,27 @@ default       newsericenode          NodePort    10.233.50.67    <none>        8
 default       web-pod-svc            ClusterIP   10.233.28.212   <none>        80/TCP                   4d23h
 kube-system   coredns                ClusterIP   10.233.0.3      <none>        53/UDP,53/TCP,9153/TCP   19d
 kube-system   metrics-server         ClusterIP   10.233.13.239   <none>        443/TCP                  14d
+
+12. Which shows the latest events in the whole cluster, ordered by time, Use kubectl for it.  [take from kubernetes/docs cheatsheet]
+
+root@master ~]# kubectl get events --sort-by=.metadata.creationTimestamp
+LAST SEEN   TYPE     REASON             OBJECT                  MESSAGE
+34m         Normal   SuccessfulCreate   daemonset/dsimportent   Created pod: dsimportent-c9fck
+34m         Normal   Scheduled          pod/dsimportent-c9fck   Successfully assigned default/dsimportent-c9fck to node1
+34m         Normal   Pulling            pod/dsimportent-c9fck   Pulling image "httpd:2.4-alpine"
+34m         Normal   Pulled             pod/dsimportent-c9fck   Successfully pulled image "httpd:2.4-alpine" in 11.835492319s
+34m         Normal   Created            pod/dsimportent-c9fck   Created container ds-importent
+34m         Normal   Started            pod/dsimportent-c9fck   Started container ds-importent
+31m         Normal   Killing            pod/dsimportent-c9fck   Stopping container ds-importent
+28m         Normal   Scheduled          pod/dsimportent-wbrjz   Successfully assigned default/dsimportent-wbrjz to master
+28m         Normal   SuccessfulCreate   daemonset/dsimportent   Created pod: dsimportent-wbrjz
+28m         Normal   Scheduled          pod/dsimportent-bsgx6   Successfully assigned default/dsimportent-bsgx6 to node1
+28m         Normal   SuccessfulCreate   daemonset/dsimportent   Created pod: dsimportent-bsgx6
+28m         Normal   Pulled             pod/dsimportent-bsgx6   Container image "httpd:2.4-alpine" already present on machine
+28m         Normal   Created            pod/dsimportent-bsgx6   Created container ds-importent
+28m         Normal   Started            pod/dsimportent-bsgx6   Started container ds-importent
+28m         Normal   Pulling            pod/dsimportent-wbrjz   Pulling image "httpd:2.4-alpine"
+28m         Normal   Pulled             pod/dsimportent-wbrjz   Successfully pulled image "httpd:2.4-alpine" in 17.291201144s
+28m         Normal   Created            pod/dsimportent-wbrjz   Created container ds-importent
+28m         Normal   Started            pod/dsimportent-wbrjz   Started container ds-importent
+
