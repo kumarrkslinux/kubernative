@@ -231,3 +231,17 @@ spec:
           requests:
             cpu: 10m
             #  memory: 10Mi
+11. How can find out what is the servcice CIDR 
+    
+[root@master ~]# kubectl describe pods kube-controller-manager-master -n kube-system  |grep service-cluster
+      --service-cluster-ip-range=10.233.0.0/18
+      
+[root@master ~]# kubectl get svc -A
+NAMESPACE     NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)                  AGE
+default       audi-web-app-service   NodePort    10.233.61.144   <none>        8080:30002/TCP           3d
+default       front-end-svc          NodePort    10.233.9.44     <none>        80:32017/TCP             15d
+default       kubernetes             ClusterIP   10.233.0.1      <none>        443/TCP                  19d
+default       newsericenode          NodePort    10.233.50.67    <none>        80:30723/TCP             14d
+default       web-pod-svc            ClusterIP   10.233.28.212   <none>        80/TCP                   4d23h
+kube-system   coredns                ClusterIP   10.233.0.3      <none>        53/UDP,53/TCP,9153/TCP   19d
+kube-system   metrics-server         ClusterIP   10.233.13.239   <none>        443/TCP                  14d
