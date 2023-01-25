@@ -269,3 +269,58 @@ LAST SEEN   TYPE     REASON             OBJECT                  MESSAGE
 28m         Normal   Created            pod/dsimportent-wbrjz   Created container ds-importent
 28m         Normal   Started            pod/dsimportent-wbrjz   Started container ds-importent
 
+13. Writes the names of all namespaced kubernetes resources (like pod,secret,ConfigMap)
+
+ Find the Project-* Namespcae with highst number of roles defined in it and write its name and amount of Roles
+
+[root@master ~]# kubectl api-resources --namespaced=true |awk {'print $1'}
+NAME
+bindings
+configmaps
+endpoints
+events
+limitranges
+persistentvolumeclaims
+pods
+podtemplates
+replicationcontrollers
+resourcequotas
+secrets
+serviceaccounts
+services
+controllerrevisions
+daemonsets
+deployments
+replicasets
+statefulsets
+localsubjectaccessreviews
+horizontalpodautoscalers
+cronjobs
+jobs
+leases
+networkpolicies
+networksets
+endpointslices
+events
+pods
+ingresses
+networkpolicies
+poddisruptionbudgets
+rolebindings
+roles
+csistoragecapacities
+
+[root@master ~]# kubectl get ns
+NAME               STATUS   AGE
+app-team1          Active   17d
+corp-net           Active   15d
+default            Active   19d
+defence            Active   5d
+kube-node-lease    Active   19d
+kube-public        Active   19d
+kube-system        Active   19d
+kubekey-system     Active   19d
+project-hamaster   Active   71m
+space              Active   2d20h
+
+Kubectl get roles -n project-hamaster --no-headers |wc -l  [Same way used for all the namespace]
