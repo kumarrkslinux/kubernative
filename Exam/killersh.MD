@@ -146,3 +146,23 @@ web-projec01-fb76d5cdd-44xhl   0m           3Mi
 7. Check how the master compoenets , kubelet,kube-apiserver,kube-scheduler,kuber-controller-manager and etcd are started/installed on the master ndoe and also find out the name of the DNS application how it started/installed on the master node.  [staticpod/Not installed/process/pod]
 
 kubectl get pods -n kuber-system 
+
+
+8. Temproarily stop the kube-scheduler this mean in a way that we an start it again afterwards. create a pod named manual-sheduler of image nginx  make sure it is not scheduled.  Manually assign the name in the in the yaml with second node name and make sure its running. 
+
+cd /etc/kubernetes/manifest; mv /etc/kubernetes/manifest/kube-scheduler.yml /root/ 
+
+[root@master ~]# cat manualschedule-pod.yml 
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+  name: manualschedule-pod
+spec:
+  nodeName: node01
+  containers:
+  - image: nginx
+    name: manualschedule-pod
+
+
+9. 
