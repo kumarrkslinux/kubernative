@@ -188,3 +188,46 @@ no
 [root@master manifests]# kubectl auth can-i list secrets --as system:serviceaccount:project-hamaster:processor  -n project-hamaster
 no
 
+10. Create daemonset names dsimportent with images httpd:2.4-alpine and labels id=ds-important and uid=1842kska-6789-7890-3567-d878798878. The pod it creates should request 10milicore cpu and 10 mebibyte memeory. Pod of the Damonset should run on all the srevers 
+
+[root@master ~]# kubectl get daemonsets.apps -o wide
+NAME          DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE   CONTAINERS     IMAGES             SELECTOR
+dsimportent   2         2         2       2            2           <none>          40s   ds-importent   httpd:2.4-alpine   name=ds-importent
+
+[root@master ~]# kubectl get pods -o wide 
+NAME                READY   STATUS    RESTARTS   AGE   IP              NODE     NOMINATED NODE   READINESS GATES
+dsimportent-bsgx6   1/1     Running   0          50s   10.233.90.246   node1    <none>           <none>
+dsimportent-wbrjz   1/1     Running   0          50s   10.233.70.52    master   <none>           <none>
+
+
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: dsimportent
+  namespace: 
+  labels:
+    id: ds-importent
+    #    uuid: 
+spec:
+  selector:
+    matchLabels:
+      name: ds-importent
+  template:
+    metadata:
+      labels:
+        name: ds-importent
+    spec:
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: ds-importent
+        image: httpd:2.4-alpine
+        resources:
+          limits:
+            memory: 10Mi
+            #  cpu: 10mi
+          requests:
+            cpu: 10m
+            #  memory: 10Mi
